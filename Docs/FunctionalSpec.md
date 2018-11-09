@@ -2,24 +2,32 @@
 
 ### Background  
   
-State and federal regulations require healthcare providers to report positive incidences of varying diseases and conditions, termed notifiable conditions. After a case is reported, case investigation determines: disease etiology, case management steps, potential sources of infection, management of exposure(s), and environmental measures. Traditionally, the case reporting process has been conducted via paper reports and internet-based entry systems, which are often slow, incomplete, or not reported at all due to the significant effort required of clinicians. Fortunately, electronic health record (EHR) developments encouraged by the HITECH Act make electronic case reporting (eCR) a more viable option for healthcare facilities. eCR is the electronic transmission of a case report directly from a patient’s EHR to a public health jurisdiction or healthcare intermediary, preferrably as an automated process. The aim of eCR is to reduce clinician burden, while also increasing report timeliness and completion. In turn, these improvements allow for increased detection of outbreaks, earlier intervention, and decreased disease transmission. At present, there is not an established eCR program at UW Medicine. Our system aims to mimic (pun intended) what an eCR system could look like using MIMIC III data. We also opted to merge our data system with the CDC’s National Antimicrobial Resistance Monitoring System (NARMS) data in order to integrate a tracking and clinical decision support element to add further benefit for clinicians.  
+State and federal regulations require healthcare providers to report positive incidences of varying diseases and conditions, termed notifiable conditions. After a case is reported, case investigation determines: disease etiology, case management steps, potential sources of infection, management of exposure(s), and environmental measures. Traditionally, the case reporting process has been conducted via paper reports and internet-based entry systems, which are often slow, incomplete, or not reported at all due to the significant effort required of clinicians. Fortunately, electronic health record (EHR) developments encouraged by the HITECH Act make electronic case reporting (eCR) a more viable option for healthcare facilities. eCR is the electronic transmission of a case report directly from a patient’s EHR to a public health jurisdiction or healthcare intermediary, preferrably as an automated process. The aim of eCR is to reduce clinician burden, while also increasing report timeliness and completion. In turn, these improvements allow for increased detection of outbreaks, earlier intervention, and decreased disease transmission. At present, there is not an established eCR program at UW Medicine. Our system aims to mimic (pun intended) what an eCR system could look like using Medical Information Mart for Intensive Care III (MIMIC-III) data. We also opted to merge our data system with the CDC’s National Antimicrobial Resistance Monitoring System (NARMS) data in order to integrate a tracking and clinical decision support element to add further benefit for clinicians.  
+Antibiotic resistance is a complex public health issue. Antibiotic resistance is not commonly reported and therefore tracking antibiotic resistance is difficult. This needs to be addressed, as different geographic regions have varying propensities for antimicrobial resistant strains to arise. Identification of antibiotic resistant strains in the local area or recent past could help guide treatment strategies, resource allocation, or public health research.  
   
+### Data Sources  
+* **MIMIC III** - a SQL database which has been converted to CSV: The MIMIC III database contains many tables, all of which are relational tables with rows and columns. One patient data for every row; however, patients may have multiple rows if they have had multiple visits, diagnoses, prescriptions, etc. Columns contain structured and unstructured patient data. Much of the data is highly structured, such as the ICD-9 code column, but some transformation may be required to extract relevant information from patient notes columns. In this case, we intend to use natural language processing.  
+* **PHIN VADS Trigger Codes** - CSV: This dataset allows us to more easily identify positive cases with a predefined set of ICD, LOINC, and SNOMED codes.  
+* **NARMS** - CSV: Contains relational table with rows and columns. One patient data for every row. And for each column, most of the content in the table is structured, with the exception of the index.  
   
 ### User Profile  
-  
-#### Public Health Practitioner  
+We will be designing our system to be primarily used by individuals involved in patient treatment, resource allocation, and medical research to expedite the identification, response, and tracking of antibiotic resistant bacterial infections. Some examples of the different use profiles include clinicians, public health practitioners,and public officials.  
 
-#### Clinician  
-  
-#### Medical Researcher  
-  
-#### Government
+Clinician workload would be alleviated by the automatic eCR program and the system could be used to help clinicians identify recent infections within the area to help expedite the diagnosis and treatment process. We do not expect clinicians to be familiar with Python or devote time towards learning to code. Physicians are, however, familiar with EHR and the concept of eCR. These users would be expected to input bacterial strains or antibiotics to the database to generate case reports in dpf format and check for recent antibiotic resistance. This information would be used to direct patient treatment. For example, if antibiotic resistance has been identified recently and the area has a propensity to develop resistance, a physician may choose to use a different antibiotic as a strategy to combat antibiotic resistance.  
+
+Public officials will be using the eCR to track antibiotic resistance, allocate resources, and identify important avenues for future research. Use of EHR and eCRs should be very familiar. These users may be more familiar with coding or may devote resources to modify our system to fit their needs. These users could potentially modify our system to automatically generate eCR in dpf format once a patient or outbreak with antibiotic resistance is identified. This information would be used to direct public health decisions. For example, if antibiotic resistance has been identified, public officials may choose to direct more resources to help minimize the spread of the antibiotic resistant strain or strategize research focuses.  
+
+Public Health Researchers will be using the system to track and study antibiotic resistance patterns and treatment strategies. These users will be very familiar with EHR and eCR. They may have variable levels of familiarity with coding, from completely lacking coding skills to being bioinformatics experts. We would expect these users at minimum to input bacterial strains or antibiotics to the database to generate case reports in dpf format. This information would be used in public health research to identify and study instances of antibiotic resistance.  
   
   
 ### Use Cases  
-  
-#### Health surveillance
+* Ex1: Health surveillance  
+    * **Objective:** To identify positive cases of specific conditions and extract case relevant data  
+    * **Expected Interactions:** User would input which condition(s) they are interested in examining. Then predetermined trigger codes associated with the condition would be used to identify positive cases and the system would automatically generate a report for them. The user would receive the report.  
+* Ex2: Drug Resistance patterns    
+    * **Objective:** Examine medical prescriptions in association with drug resistance patterns  
+    * **Expected Interactions:** User would be able to select a specific person/case and click a function to see if they have been prescribed medications associated with drug resistance. Additionally, the user may also look in aggregate information  
+* Ex3: Outbreak investigation  
+    * **Objective:** To identify potential outbreaks via patient data based on keyword search.
+    * **Expected Interactions:** User would input the condition of interest, and receive a dataframe and aggregate report for that condition.
 
-#### Examining hospital resources used for each outbreak
-
-#### Tracking drug resistance patterns 
