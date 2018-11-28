@@ -100,8 +100,7 @@ ADMISSIONS2['admit_new'] = pd.to_datetime(ADMISSIONS2['admit_new'])
 #ADMISSIONS2.head()
 
 #remove all new variables except converted date
-COLS = [16, 17, 18]
-ADMISSIONS2.drop(ADMISSIONS2.columns[COLS], axis=1, inplace=True)
+admissions2.drop(['admit_year', 'admit_month', 'admit_day'], axis=1, inplace=True)
 
 #print dataframe info
 #ADMISSIONS2.info()
@@ -148,8 +147,7 @@ ADMISSIONS2['disch_new'] = ADMISSIONS2[['disch_year', 'disch_month',
 
 ADMISSIONS2['disch_new'] = pd.to_datetime(ADMISSIONS2['disch_new'])
 
-COLS = [17, 18, 19]
-ADMISSIONS2.drop(ADMISSIONS2.columns[COLS], axis=1, inplace=True)
+ADMISSIONS2.drop(['disch_year', 'disch_month', 'disch_day'], axis=1, inplace=True)
 
 
 
