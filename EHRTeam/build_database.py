@@ -14,6 +14,7 @@ ADMISSIONS = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_admissions.csv")
 DRGCODES = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_drgcodes.csv")
 PROCEDURES_ICD = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_procedures_icd.csv")
 D_PROCEDURES_ICD = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_d_procedures_icd.csv")
+NOTES = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_notes.csv")
 
 #Import salmonella trigger codes and select only ICD-9 codes
 SALMONELLA_TC = pd.read_csv("/home/maggie/EHRTeam/Data/salmonellaRCTC.csv")
@@ -27,11 +28,27 @@ NARMS_R1 = NARMS[NARMS.Region_Name == 'Region 1']
 NARMS_R1_SALM = NARMS_R1[NARMS_R1.Genus == 'Salmonella']
 
 
-#convert time variables to datatime (bc apparently moving them to my subsystem messed that up)
-ADMISSIONS['admittime'] = pd.to_datetime(ADMISSIONS['admittime'])
-ADMISSIONS['dischtime'] = pd.to_datetime(ADMISSIONS['dischtime'])
-ADMISSIONS['deathtime'] = pd.to_datetime(ADMISSIONS['deathtime'])
-
+#create age_group variable (to match with NARMS later)
+ADMISSIONS['age_group'] = pd.Series(np.zeros(ADMISSIONS.shape[0]))
+ADMISSIONS.loc[(ADMISSIONS['age'] > 0) &
+               (ADMISSIONS['age'] < 5), 'age_group'] = '0-4'
+ADMISSIONS.loc[(ADMISSIONS['age'] >= 5) &
+               (ADMISSIONS['age'] < 10), 'age_group'] = '5-9'
+ADMISSIONS.loc[(ADMISSIONS['age'] >= 10) &
+               (ADMISSIONS['age'] < 20), 'age_group'] = '10-19'
+ADMISSIONS.loc[(ADMISSIONS['age'] >= 20) &
+               (ADMISSIONS['age'] < 30), 'age_group'] = '20-29'
+ADMISSIONS.loc[(ADMISSIONS['age'] >= 30) &
+               (ADMISSIONS['age'] < 40), 'age_group'] = '30-39'
+ADMISSIONS.loc[(ADMISSIONS['age'] >= 40) &
+               (ADMISSIONS['age'] < 50), 'age_group'] = '40-49'
+ADMISSIONS.loc[(ADMISSIONS['age'] >= 50) &
+               (ADMISSIONS['age'] < 60), 'age_group'] = '50-59'
+ADMISSIONS.loc[(ADMISSIONS['age'] >= 60) &
+               (ADMISSIONS['age'] < 70), 'age_group'] = '60-69'
+ADMISSIONS.loc[(ADMISSIONS['age'] >= 70) &
+               (ADMISSIONS['age'] < 80), 'age_group'] = '70-79'
+ADMISSIONS.loc[(ADMISSIONS['age'] >= 80), 'age_group'] = '80+'
 
 """
 Reprocess dates from random future dates (how the EHR was anonymized)
@@ -96,14 +113,10 @@ ADMISSIONS2['admit_new'] = ADMISSIONS2[['admit_year', 'admit_month',
 #convert string to date
 ADMISSIONS2['admit_new'] = pd.to_datetime(ADMISSIONS2['admit_new'])
 
-#print dataset head
-#ADMISSIONS2.head()
-
 #remove all new variables except converted date
-admissions2.drop(['admit_year', 'admit_month', 'admit_day'], axis=1, inplace=True)
+admissions2.drop(['admit_month', 'admit_day'], axis=1, inplace=True)
+#keeping admit_year to match with NARMS
 
-#print dataframe info
-#ADMISSIONS2.info()
 
 #repeating above process for discharge date
 ADMISSIONS2['disch_year'] = pd.Series(np.zeros(ADMISSIONS2.shape[0]))
@@ -301,11 +314,13 @@ NARMS_PATIENT = pd.concat(FRAMES, sort=True)
 Merge imported datasets
 """
 #Merge diagnoses with its definitions
-MERGE_DIAGNOSES = pd.merge(DIAGNOSES_ICD, D_DIAGNOSES_ICD, how='inner',
+MERGE_DIAGNOSES = pd.merge(DIAGNOSES-ICD.drop(columns='Unnamed:0']),
+                           D_DIAGNOSES_ICD.drop(columns=['Unnamed: 0']), how='inner',
                            left_on='icd9_code', right_on='icd9_code')
 
 #Merge procedures with its definitions
-MERGE_PROCEDURES = pd.merge(PROCEDURES_ICD, D_PROCEDURES_ICD, how='inner',
+MERGE_PROCEDURES = pd.merge(PROCEDURES_ICD.drop(columns=['Unnamed: 0']),
+                            D_PROCEDURES_ICD.drop(columns=['Unnamed: 0']), how='inner',
                             left_on='icd9_code', right_on='icd9_code')
 
 #Merge diagnoses and procedures
@@ -326,16 +341,22 @@ MERGE_DIAG_PROC_SALM = pd.merge(MERGE_DIAG_PROC_SALM, MERGE_DIAG_PROC,
 #should be 1297 unique
 
 #merge with ADMISSIONS
-MERGE_SALM_ADMIT = pd.merge(MERGE_DIAG_PROC_SALM, ADMISSIONS2,
+MERGE_SALM_ADMIT = pd.merge(MERGE_DIAG_PROC_SALM,
+                            ADMISSIONS2.drop(columns=['Unnamed: 0']),
                             how='left', left_on=['subject_id', 'hadm_id'],
                             right_on=['subject_id', 'hadm_id'])
 
 #merge with DRGCODES
-MERGE_SALM_ADMIT_DRG = pd.merge(MERGE_SALM_ADMIT, DRGCODES,
+MERGE_SALM_ADMIT_DRG = pd.merge(MERGE_SALM_ADMIT, DRGCODES.drop(columns=['Unnamed: 0']),
+                                how='left', left_on=['subject_id', 'hadm_id'],
+                                right_on=['subject_id', 'hadm_id'])
+
+#merge with NOTES
+MERG_SALM_NOTES = pd.merge(MERGE_SALM_ADMIT_DRG, NOTES.drop(columns=['Unnamed: 0']),
                                 how='left', left_on=['subject_id', 'hadm_id'],
                                 right_on=['subject_id', 'hadm_id'])
 
 #merge with prescriptions
-MERGE_ALL_SALMONELLA = pd.merge(MERGE_SALM_ADMIT_DRG, PRESCRIPTIONS,
+MERGE_ALL_SALMONELLA = pd.merge(MERGE_SALM_NOTES, PRESCRIPTIONS,
                                 how='left', left_on=['subject_id', 'hadm_id'],
                                 right_on=['subject_id', 'hadm_id'])

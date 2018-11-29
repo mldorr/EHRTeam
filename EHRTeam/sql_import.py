@@ -92,6 +92,12 @@ FROM d_icd_diagnoses
 """
 d_procedures_icd = pd.read_sql_query(query, con)
 
+#get notes
+query = query_schema +"""
+SELECT subject_id, hadm_id, chartdate, category, description, text
+FROM noteevents
+"""
+notes = pd.read_sql_query(query, con)
 
 #export all to CSVs
 prescriptions.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_prescriptions.csv")
@@ -101,3 +107,4 @@ admissions.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic
 drgcodes.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_drgcodes.csv")
 procedures_icd.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_procedures_icd.csv")
 d_procedures_icd.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_d_procedures_icd.csv")
+notes.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_notes.csv")
