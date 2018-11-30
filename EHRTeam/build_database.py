@@ -14,7 +14,7 @@ ADMISSIONS = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_admissions.csv")
 DRGCODES = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_drgcodes.csv")
 PROCEDURES_ICD = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_procedures_icd.csv")
 D_PROCEDURES_ICD = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_d_procedures_icd.csv")
-NOTES = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_notes.csv")
+#NOTES = pd.read_csv("/home/maggie/EHRTeam/Data/mimic_notes.csv")
 
 #Import salmonella trigger codes and select only ICD-9 codes
 SALMONELLA_TC = pd.read_csv("/home/maggie/EHRTeam/Data/salmonellaRCTC.csv")
@@ -231,7 +231,7 @@ NARMS_YEAR = NARMS_CUT.groupby(['Data_Year']).agg({'Specimen_ID':'nunique',
                                                    'AZM_Concl':"count",
                                                    'CAZ_Concl':"count",
                                                    'CCV_Concl':"count",
-                                                   'CEP_Concl':"count",
+ B                                                  'CEP_Concl':"count",
                                                    'CEQ_Concl':"count",
                                                    'CHL_Concl':"count",
                                                    'CIP_Concl':"count",
@@ -314,7 +314,7 @@ NARMS_PATIENT = pd.concat(FRAMES, sort=True)
 Merge imported datasets
 """
 #Merge diagnoses with its definitions
-MERGE_DIAGNOSES = pd.merge(DIAGNOSES-ICD.drop(columns='Unnamed:0']),
+MERGE_DIAGNOSES = pd.merge(DIAGNOSES-ICD.drop(columns=['Unnamed: 0']),
                            D_DIAGNOSES_ICD.drop(columns=['Unnamed: 0']), how='inner',
                            left_on='icd9_code', right_on='icd9_code')
 
@@ -357,6 +357,13 @@ MERG_SALM_NOTES = pd.merge(MERGE_SALM_ADMIT_DRG, NOTES.drop(columns=['Unnamed: 0
                                 right_on=['subject_id', 'hadm_id'])
 
 #merge with prescriptions
-MERGE_ALL_SALMONELLA = pd.merge(MERGE_SALM_NOTES, PRESCRIPTIONS,
+MERGE_ALL_SALMONELLA = pd.merge(MERGE_SALM_NOTES, PRESCRIPTIONS.drop(columns=['Unnamed: 0']),
                                 how='left', left_on=['subject_id', 'hadm_id'],
                                 right_on=['subject_id', 'hadm_id'])
+
+
+#cut down columns to only those we'd want in the eCR
+MERGE_ALL_SALMONELLA.drop(['admittime', 'dischtime', 'deathtime', 'short_title',
+                          'drg_type', 'drg_code', 'icustay_id', 'startdate',
+                          'enddate', 'drg_severity', 'drg_mortality', 'row_id',
+                          'drug_name_poe', 'drug_name_generic'], axis=1, inplace=True)
