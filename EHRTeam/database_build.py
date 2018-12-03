@@ -1,13 +1,24 @@
+"""
+database_build
+
+used to import and merge dataframes
+"""
 
 import numpy as np
 import pandas as pd
 import os
 
 def salmonellaRCTC_processor(SALMONELLA_TC):
+    """selects only ICD-9 salmonella trigger codes"""
     SALMONELLA_ICD = SALMONELLA_TC[SALMONELLA_TC.CodeSystem == 'ICD9CM']
     return SALMONELLA_ICD
 
-def Admissions_processor(ADMISSIONS):
+def admissions_processor(ADMISSIONS):
+    """
+    creates age_group variable and reprocesses dates from random
+    future dates (how the EHR was anonymized) to match the MIMIC
+    dataframe date range
+    """
     ADMISSIONS['age_group'] = pd.Series(np.zeros(ADMISSIONS.shape[0]))
     ADMISSIONS.loc[(ADMISSIONS['age'] > 0) &
                (ADMISSIONS['age'] < 5), 'age_group'] = '0-4'
@@ -136,7 +147,12 @@ def Admissions_processor(ADMISSIONS):
 
     return (ADMISSIONS,ADMISSIONS2)
 
-def Narms_processor(NARMS):
+def narms_processor(NARMS):
+    """
+    cuts down narms data to appropriate US region and condition
+    limits columns to only relevant
+    reformats columns
+    """
     #Select region that corresponds to the MIMIC data
     NARMS_R1 = NARMS[NARMS.Region_Name == 'Region 1']
     #Select only Salmonella
@@ -278,10 +294,10 @@ def Narms_processor(NARMS):
     FRAMES = [NARMS_YEAR1, NARMS_YEAR_AGE1]
     NARMS_PATIENT = pd.concat(FRAMES, sort=True)
 
-    return NARMS_PATIENT
+    return (NARMS_YEAR, NARMS_YEAR_AGE)
 
 def merge_processor(DIAGNOSES_ICD, D_DIAGNOSES_ICD, PROCEDURES_ICD, D_PROCEDURES_ICD,
-                    SALMONELLA_ICD, ADMISSIONS2, DRGCODES,  PRESCRIPTIONS):
+                    SALMONELLA_ICD, ADMISSIONS2, DRGCODES, PRESCRIPTIONS):
     """
     Merge imported datasets
     """
@@ -325,18 +341,20 @@ def merge_processor(DIAGNOSES_ICD, D_DIAGNOSES_ICD, PROCEDURES_ICD, D_PROCEDURES
                                     how='left', left_on=['subject_id', 'hadm_id'],
                                     right_on=['subject_id', 'hadm_id'])
 
-    #merge with NOTES
-    #MERG_SALM_NOTES = pd.merge(MERGE_SALM_ADMIT_DRG, NOTES.drop(columns=['Unnamed: 0']),
-    #                                how='left', left_on=['subject_id', 'hadm_id'],
-    #                                right_on=['subject_id', 'hadm_id'])
-    MERGE_SALM_NOTES = MERGE_SALM_ADMIT_DRG
     #merge with prescriptions
-    MERGE_ALL_SALMONELLA = pd.merge(MERGE_SALM_NOTES, PRESCRIPTIONS,
+    MERGE_ALL_SALMONELLA = pd.merge(MERGE_SALM_ADMIT_DRG, PRESCRIPTIONS.drop(columns=['Unnamed: 0']),
                                     how='left', left_on=['subject_id', 'hadm_id'],
                                     right_on=['subject_id', 'hadm_id'])
+
+    #cut down columns to other those we'd want in the eCR
+    MERGE_ALL_SALMONELLA.drop(['admittime', 'dischtime', 'deathtime', 'short_title',
+                               'drg_type', 'drg_code', 'icustay_id', 'startdate',
+                               'enddate', 'drg_severity', 'drg_mortality', 'row_id',
+                               'drug_name_poe', 'drug_name_generic'], axis=1, inplace=True)
     return MERGE_ALL_SALMONELLA
 
 def main():
+    """merges everything"""
     PRESCRIPTIONS = pd.read_csv("mimic_prescriptions.csv")
     DIAGNOSES_ICD = pd.read_csv("mimic_diagnoses_icd.csv")
     D_DIAGNOSES_ICD = pd.read_csv("mimic_d_diagnoses_icd.csv")
@@ -345,20 +363,21 @@ def main():
     PROCEDURES_ICD = pd.read_csv("mimic_procedures_icd.csv")
     D_PROCEDURES_ICD = pd.read_csv("mimic_d_procedures_icd.csv")
     SALMONELLA_TC = pd.read_csv("salmonellaRCTC.csv")
-    #NARMS = pd.read_csv("IsolateData.csv", low_memory=False)
-    #NOTES = pd.read_csv("mimic_notes.csv")
-    '''
-    important ! Narms file not found!
-    '''
+    NARMS = pd.read_csv("IsolateData.csv", low_memory=False)
+
     SALMONELLA_ICD = salmonellaRCTC_processor(SALMONELLA_TC)
-    #narm
-    Admission_list = Admissions_processor(ADMISSIONS)
-    ADMISSIONS = Admission_list[0]
-    ADMISSIONS2 = Admission_list[1]
-    #NARMS_PATIENT = Narms_processor(NARMS)
+    #Admissions
+    ADMISSION_LIST = admissions_processor(ADMISSIONS)
+    ADMISSIONS = ADMISSION_LIST[0]
+    ADMISSIONS2 = ADMISSION_LIST[1]
+    #NARMS
+    NARMS_PROC = narms_processor(NARMS)
+    NARMS_YEAR = NARMS_PROC[0]
+    NARMS_YEAR_AGE = NARMS_PROC[1]
+    #Merge
     MERGE_ALL_SALMONELLA = merge_processor(DIAGNOSES_ICD, D_DIAGNOSES_ICD, PROCEDURES_ICD,
                             D_PROCEDURES_ICD,SALMONELLA_ICD, ADMISSIONS2,DRGCODES,  PRESCRIPTIONS)
-    print('successfully here')
+    print('database creation successful')
     MERGE_ALL_SALMONELLA.to_csv('out.csv')
 
 if __name__ == '__main__':
