@@ -11,8 +11,13 @@ The query component is designed only to read from our database. It will be used 
 This component will be our core processing system to implement our use cases. For instance, we need to apply some mathematical models to find a correlation and percentage number between the patient’s drug prescription and the drug resistance pattern in some area. Furthermore, we might also implement the formula for the distribution of the people affected by the disease. The analysis system is closely related to visualization manager because the result of the analysis should be visualized to make it understandable.  
   
 #### Visualization  
-An interactive visualization of the dataset will be the final output for this project. This tool helps the user to understand the significance of the data by placing it to the visual context. We will provide several types of data presentation of the dataset, such table, graph, and heat map to show patterns, trends, and correlations from our analysis system. Each of them will use different python packages to be implemented, specifically matplotlib, seaborn, bokeh, and arcGIS.  
-  
+An interactive visualization of the dataset will be part of the final output for this project. This tool helps the user to understand the significance of the data by placing it to the visual context. We will provide several types of data presentation of the dataset, such tables and graphs to show patterns, trends, and correlations from our analysis system. Each of them will use different python packages to be implemented, specifically matplotlib, seaborn, bokeh, and arcGIS.  
+
+#### PDF Output
+This component will generate a PDF electronic health report, including basic patient information, antibiotic regime, and recent antibiotic resistance. This will produce a file that can be easily used to guide treatment and be incorporated into the patient record and treatment plan. The component will use PyQty to generate the PDF files. 
+
+#### Graphical User Interface 
+A graphical user interface will be developed using PyQty or Pyside to make a user friendly way to query and visualize the data. The user will be able to select individual patients to view their current antibiotic treatment regime and recent antibiotic resistance to guide treatment choices. Users will have the ability to generate a health report in the form of a PDF, incorporating basic patient information, antibiotic regime, and recent antibiotic resistance.  
 
 ### Interactions
 ![Interactions Flow](http://staff.washington.edu/mldorr/wordpress/wp-content/uploads/2018/11/Assignment5Interactions2.png)  
