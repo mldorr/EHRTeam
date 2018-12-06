@@ -30,13 +30,40 @@ def querySingle(df, column_name, column_value, list_groupby, list_tolist, join_c
     #print(df_all)
     return df_all.loc[df_all[column_name] == column_value]
 
+def filter(df_all, column_name, column_value, signal):
+    df_all.reset_index(inplace=True)
+    if (signal == '='):
+        return df_all.loc[df_all[column_name] == column_value]
+    elif (signal == '<'):
+        return df_all.loc[df_all[column_name] < column_value]
+    elif (signal == '>'):
+        return df_all.loc[df_all[column_name] == column_value]
+    else :
+        print('signal not find')
+
+def narms_query(file_name, data_year, age_group,output_filename = 'narms_out.csv'):
+    df_all = pd.read_csv(file_name)
+    df_all = df_all.loc[df_all['Data_Year'] == data_year]
+    df_all = df_all.loc[df_all['Age_Group'] == age_group]
+    for column in list(df_all.columns.values):
+        #print(column)
+        #print(df_all.iloc[0, df_all.columns.get_loc(column)])
+        if(df_all.iloc[0, df_all.columns.get_loc(column)] == 0):
+            df_all = df_all.drop(columns = column)
+    print(list(df_all.columns.values))
+    df_all.to_csv(output_filename,index = False)
+    print('successful')
+
 if __name__ == '__main__':
+    #narms_query("narm's processed.csv", 1996, '0-4')
+
     df=pd.read_csv('test_file.csv')
     #df = pd.DataFrame(data=d)
     subject_ids = int(input('Enter subject_id (e.g., 61): '))
 
-    output=querySingle(df,'subject_id', subject_ids, ["subject_id","hadm_id"], ["drug_type","drug","drug_name_poe",
+    output=query(df,["subject_id","hadm_id"], ["drug_type","drug","drug_name_poe",
     "drug_name_generic","formulary_drug_cd"], ["subject_id","hadm_id"])
+    output = filter(output, 'subject_id', 66, '<'  )
     print(output)
-    output.to_csv('test_out.csv')
+    output.to_csv('test_out.csv',index = False)
     outputs=pd.read_csv('test_out.csv')
