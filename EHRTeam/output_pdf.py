@@ -147,7 +147,7 @@ def pdfgenerator(df, df2):
     pdf.write_html(html)
     pdf.output('html2pdf.pdf')
 
-if __name__ == '__main__':
+def get_report(subject_id, year, age):
     df=pd.read_csv('test_file.csv')
     list_tolist = reversed(['hadm_id', 'Code', 'Descriptor',	'icd9_code',
     'long_title', 'admission_type',	'diagnosis', 'insurance', 'language', 'religion',
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
     'drug_type', 'drug', 'formulary_drug_cd'])
 
-    table = qu.querySingle(df, 'subject_id', 61, ["subject_id"], list_tolist, ["subject_id"])
+    table = qu.querySingle(df, 'subject_id', subject_id, ["subject_id"], list_tolist, ["subject_id"])
 
     for column in list_tolist:
         if column not in list(table.columns.values):
@@ -163,7 +163,10 @@ if __name__ == '__main__':
     #print(table.columns.values)
 
 
-    table_narms = qu.narms_query("narm's processed.csv", 1996, '0-4')
+    table_narms = qu.narms_query("narm's processed.csv", year,  age)
 
 
     pdfgenerator(table,table_narms)
+
+if __name__ == '__main__':
+    get_report(61, 1996, '0-4')
