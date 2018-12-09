@@ -25,9 +25,9 @@ class TestFunctions(unittest.TestCase):
         This function test whether the "querySingle" function extract correct row and attributes.
         """
         data_extract = query_single(DF, 'subject_id', 61, ["subject_id"],
-                                   ["insurance", "age"], "subject_id")
+                                    ["insurance", "age"], "subject_id")
         incorrect_data_extract = query_single(DF, 'subject_id', 300, ["subject_id"],
-                                             ["insurance"], "subject_id")
+                                              ["insurance"], "subject_id")
         self.assertEqual(data_extract.shape, (1, 3))
         self.assertEqual(incorrect_data_extract.shape, (0, 2))
         self.assertTrue(len(data_extract['insurance'][0]) == len(data_extract['age'][0]))
@@ -53,10 +53,12 @@ class TestFunctions(unittest.TestCase):
         """
         filename = "narm's processed.csv"
         output_filename = 'narms_out.csv'
-        narms_query(filename, 1996, '0-4')
+        extract_narm = narms_query(filename, 1996, '0-4')
         self.assertTrue(os.path.isfile(output_filename))
         load_file = pd.read_csv(output_filename)
-        self.assertEqual(load_file.shape, (1, 13))
+        self.assertEqual(load_file.shape, (1, 35))
+        self.assertEqual(extract_narm.shape, load_file.shape)
+        self.assertEqual(list(extract_narm.columns.values), list(load_file.columns.values))
 
 
 if __name__ == '__main__':

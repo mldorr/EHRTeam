@@ -59,4 +59,5 @@ def narms_query(file_name, data_year, age_group, output_filename='narms_out.csv'
     return df_all
 
 if __name__ == '__main__':
-    df_all = narms_query("narm's processed.csv", 1996, '0-4')
+    DF_ALL = narms_query("narm's processed.csv", 1996, '0-4')
+    
