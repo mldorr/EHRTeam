@@ -3,56 +3,57 @@ This file imports necessary data from the local sql database
 """
 
 # Import libraries
-import numpy as np
+#import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+#from IPython.display import display, HTML
 import psycopg2
 
 # below imports are used to print out pretty pandas dataframes
-from IPython.display import display, HTML
 
-%matplotlib inline
+
+#%matplotlib inline
 plt.style.use('ggplot')
 
 # information used to create a database connection
-sqluser = 'postgres'
-dbname = 'mimic'
-schema_name = 'mimiciii'
-pw = 'postgres'
+SQLUSER = 'postgres'
+DBNAME = 'mimic'
+SCHEMA_NAME = 'mimiciii'
+PW = 'postgres'
 
 # Connect to postgres with a copy of the MIMIC-III database
-con = psycopg2.connect(dbname=dbname, user=sqluser, password=pw)
+CON = psycopg2.connect(dbname=DBNAME, user=SQLUSER, password=PW)
 
 # the below statement is prepended to queries to ensure they select from the right schema
-query_schema = 'set search_path to ' + schema_name + ';'
+QUERY_SCHEMA = 'set search_path to ' + SCHEMA_NAME + ';'
 
 
 
 #get data from table: prescriptions
-query = query_schema +"""
+QUERY = QUERY_SCHEMA +"""
 SELECT row_id, subject_id, hadm_id, icustay_id, startdate
     , enddate, drug_type, drug, drug_name_poe
     , drug_name_generic, formulary_drug_cd
 FROM prescriptions
 """
-prescriptions = pd.read_sql_query(query, con)
+PRESCRIPTIONS = pd.read_sql_query(QUERY, CON)
 
 #get data from table: diagnoses_icd
-query = query_schema +"""
+QUERY = QUERY_SCHEMA +"""
 SELECT subject_id, hadm_id, icd9_code
 FROM diagnoses_icd
 """
-diagnoses_icd = pd.read_sql_query(query, con)
+DIAGNOSES_ICD = pd.read_sql_query(QUERY, CON)
 
 #get data from table: d_diagnoses_icd
-query = query_schema +"""
+QUERY = QUERY_SCHEMA +"""
 SELECT short_title, icd9_code, long_title
 FROM d_icd_diagnoses
 """
-d_diagnoses_icd = pd.read_sql_query(query, con)
+D_DIAGNOSES_ICD = pd.read_sql_query(QUERY, CON)
 
 #get data from tables: admissions and patients (+ calculate age)
-query = query_schema +"""
+QUERY = QUERY_SCHEMA +"""
 (
 SELECT adm.subject_id, adm.hadm_id, adm.admission_type
     , adm.diagnosis, adm.admittime, adm.dischtime, adm.deathtime
@@ -65,46 +66,51 @@ INNER JOIN patients pat
     ON adm.subject_id = pat.subject_ID
 )
 """
-admissions = pd.read_sql_query(query, con)
+ADMISSIONS = pd.read_sql_query(QUERY, CON)
 
 
 #get data from table: drgcodes
-query = query_schema +"""
+QUERY = QUERY_SCHEMA +"""
 SELECT subject_id, hadm_id, drg_type, drg_code
     , description, drg_severity, drg_mortality
 FROM drgcodes
 """
-drgcodes = pd.read_sql_query(query, con)
+DRGCODES = pd.read_sql_query(QUERY, CON)
 
 
 #get icd-9 codes from table: procedures_icd
-query = query_schema +"""
+QUERY = QUERY_SCHEMA +"""
 SELECT subject_id, hadm_id, icd9_code
 FROM procedures_icd
 """
-procedures_icd = pd.read_sql_query(query, con)
+PROCEDURES_ICD = pd.read_sql_query(QUERY, CON)
 
 
 #get data from table: d_icd_procedures
-query = query_schema +"""
+QUERY = QUERY_SCHEMA +"""
 SELECT icd9_code, short_title, long_title
 FROM d_icd_diagnoses
 """
-d_procedures_icd = pd.read_sql_query(query, con)
+D_PROCEDURES_ICD = pd.read_sql_query(QUERY, CON)
 
 #get notes
-query = query_schema +"""
+QUERY = QUERY_SCHEMA +"""
 SELECT subject_id, hadm_id, chartdate, category, description, text
 FROM noteevents
 """
-notes = pd.read_sql_query(query, con)
+NOTES = pd.read_sql_query(QUERY, CON)
 
 #export all to CSVs
-prescriptions.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_prescriptions.csv")
-diagnoses_icd.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_diagnoses_icd.csv")
-d_diagnoses_icd.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_d_diagnoses_icd.csv")
-admissions.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_admissions.csv")
-drgcodes.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_drgcodes.csv")
-procedures_icd.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_procedures_icd.csv")
-d_procedures_icd.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_d_procedures_icd.csv")
-notes.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_notes.csv")
+PRESCRIPTIONS.to_csv("C:/Users/Maggie/OneDrive/\
+UW-BHI/2018Fall/CSE583/Project/mimic_prescriptions.csv")
+DIAGNOSES_ICD.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/\
+Project/mimic_diagnoses_icd.csv")
+D_DIAGNOSES_ICD.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/\
+CSE583/Project/mimic_d_diagnoses_icd.csv")
+ADMISSIONS.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_admissions.csv")
+DRGCODES.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_drgcodes.csv")
+PROCEDURES_ICD.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/\
+CSE583/Project/mimic_procedures_icd.csv")
+D_PROCEDURES_ICD.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/\
+CSE583/Project/mimic_d_procedures_icd.csv")
+NOTES.to_csv("C:/Users/Maggie/OneDrive/UW-BHI/2018Fall/CSE583/Project/mimic_notes.csv")
