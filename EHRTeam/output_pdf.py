@@ -43,25 +43,6 @@ def html_maker(list_content, narms):
     <h1 align="center">Patient Case Report Form</h1>
     <hr>
 
-    <style>
-      .bordered {
-        width: 100px;
-        height: 300px;
-        padding: 3px;
-        border: 2px solid purple;
-        border-radius: 8px;
-      }
-    </style>
-    <style>
-      .bordered2 {
-        width: 100px;
-        height: 900px;
-        padding: 3px;
-        border: 2px solid purple;
-        border-radius: 8px;
-      }
-    </style>
-
     <div class="bordered" style="float: left; width: 48%;">
     <h3>Patient Information</h3>
     <p>
@@ -130,7 +111,7 @@ def html_maker(list_content, narms):
 
     </p>
     </div>
-
+    <img src="eCRx_logo.png" alt="eCRx Logo" style="float:left;width:10px;height:8.3px;">
     '''
     #  line 123  MER	Meropenem: ''' + table_narms['MER_Concl'] + '''<br>
     #fileb = open('html_out.txt','w')
