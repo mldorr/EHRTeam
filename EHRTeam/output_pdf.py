@@ -39,6 +39,19 @@ def html_maker(list_content, narms):
         variable[list_name[count]] = list_content[count]
     for count in range(0, len(list_narms)):
         table_narms[list_narms[count]] = str(narms.iloc[0][count])
+
+    for item in variable.keys():
+        values_tem = variable[item]
+        if (values_tem[0] == '[' and values_tem[1] == "'" and
+           values_tem[len(values_tem) - 2] == "'" and
+           values_tem[len(values_tem) - 1] == ']') :
+           variable[item] = values_tem[2:(len(variable[item]) - 2)]
+        elif (values_tem[0] == '[' and
+           values_tem[len(values_tem) - 1] == ']') :
+           variable[item] = values_tem[1:(len(variable[item]) - 1)]
+
+    variable['age'] = int(float(variable['age']))
+    variable['age'] = str(variable['age'])
     html = '''
     <hr>
     <h1 align="center">Patient Case Report Form</h1>
@@ -126,7 +139,7 @@ def pdfgenerator(df1, df2):
     pdf.write_html(html)
     pdf.output('html2pdf.pdf')
 
-def get_report(subject_id, year, age):
+def get_report(subject_id, birth_year):
     '''main report generator program'''
     df1 = pd.read_csv('test_file.csv')
     list_tolist = reversed(['hadm_id', 'Code', 'Descriptor', 'icd9_code',
@@ -136,8 +149,33 @@ def get_report(subject_id, year, age):
                             'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
                             'drug_type', 'drug', 'formulary_drug_cd'])
 
-    table = qu.querySingle(df1, 'subject_id', subject_id, ["subject_id"],
+    table = qu.query_single(df1, 'subject_id', subject_id, ["subject_id"],
                            list_tolist, ["subject_id"])
+
+    patient_age = int(table['age'][0][0])
+
+    year = birth_year + patient_age
+
+    if patient_age <= 4 :
+        age = '0-4'
+    elif patient_age <= 9:
+        age = '5-9'
+    elif patient_age <= 19:
+        age = '10-19'
+    elif patient_age <= 29:
+        age = '20-29'
+    elif patient_age <= 39:
+        age = '30-39'
+    elif patient_age <= 49:
+        age = '40-49'
+    elif patient_age <= 59:
+        age = '50-59'
+    elif patient_age <= 69:
+        age = '60-69'
+    elif patient_age <= 79:
+        age = '70-79'
+    elif patient_age >= 80:
+        age = '80+'
 
     for column in list_tolist:
         if column not in list(table.columns.values):
@@ -146,4 +184,4 @@ def get_report(subject_id, year, age):
     pdfgenerator(table, table_narms)
 
 if __name__ == '__main__':
-    get_report(61, 1996, '0-4')
+    get_report(61, 1941)
