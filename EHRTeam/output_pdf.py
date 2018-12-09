@@ -1,43 +1,44 @@
-import pdfkit
+'''
+python module for covnerting csv and output pdf
+'''
+
+from fpdf import FPDF, HTMLMixin
 import pandas as pd
 import query as qu
 
-from fpdf import FPDF, HTMLMixin
-
 class HTML2PDF(FPDF, HTMLMixin):
+    '''create for pdf output need'''
     pass
 
 def html_maker(list_content, narms):
+    '''make the html file for pdf generator'''
     list_name = ['subject_id', 'hadm_id', 'Code', 'Descriptor',	'icd9_code',
-    'long_title', 'admission_type',	'diagnosis', 'insurance', 'language', 'religion',
-    'marital_status', 'ethnicity', 	'gender', 'expire_flag', 'age',	'age_death',
-    'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
-    'drug_type', 'drug', 'formulary_drug_cd']
+                 'long_title', 'admission_type',	'diagnosis', 'insurance', 'language', 'religion',
+                 'marital_status', 'ethnicity', 'gender', 'expire_flag', 'age',	'age_death',
+                 'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
+                 'drug_type', 'drug', 'formulary_drug_cd']
 
     list_narms = ['Data_Year', 'Age_Group', 'Specimen_ID', 'Resistance_Pattern', 'AMI_Concl',
-     'AMP_Concl', 'ATM_Concl', 'AUG_Concl', 'AXO_Concl', 'AZM_Concl', 'CAZ_Concl',
-     'CCV_Concl', 'CEP_Concl', 'CEQ_Concl', 'CHL_Concl', 'CIP_Concl', 'CLI_Concl',
-     'COT_Concl', 'CTC_Concl', 'CTX_Concl', 'ERY_Concl', 'FEP_Concl', 'FFN_Concl',
-     'FIS_Concl', 'FOX_Concl', 'GEN_Concl', 'IMI_Concl', 'KAN_Concl', 'NAL_Concl',
-     'PTZ_Concl', 'SMX_Concl', 'STR_Concl', 'TEL_Concl', 'TET_Concl', 'TIO_Concl']
+                  'AMP_Concl', 'ATM_Concl', 'AUG_Concl', 'AXO_Concl', 'AZM_Concl', 'CAZ_Concl',
+                  'CCV_Concl', 'CEP_Concl', 'CEQ_Concl', 'CHL_Concl', 'CIP_Concl', 'CLI_Concl',
+                  'COT_Concl', 'CTC_Concl', 'CTX_Concl', 'ERY_Concl', 'FEP_Concl', 'FFN_Concl',
+                  'FIS_Concl', 'FOX_Concl', 'GEN_Concl', 'IMI_Concl', 'KAN_Concl', 'NAL_Concl',
+                  'PTZ_Concl', 'SMX_Concl', 'STR_Concl', 'TEL_Concl', 'TET_Concl', 'TIO_Concl']
 
     variable = {}
     table_narms = {}
 
     for count in range(0, len(list_name)):
-        b = list_content[count]
-        if(isinstance(b,list)):
-            if (len(b) > 5):
+        cell = list_content[count]
+        if isinstance(cell, list):
+            if (len(cell) > 1 and list_name[count] != 'drug'):
                 list_content[count] = list_content[count][:1]
+            elif list_name[count] == 'drug':
+                list_content[count] = list_content[count][:50]
         list_content[count] = str(list_content[count])
         variable[list_name[count]] = list_content[count]
-    #print('line24' + variable['language'])
     for count in range(0, len(list_narms)):
-        #narms[count] = str(narms[count])
         table_narms[list_narms[count]] = str(narms.iloc[0][count])
-    for x in table_narms:
-        print(x,table_narms[x])
-    #<img src="eCRx_logo.png" alt="eCRx Logo" style="float:left;width:100px;height:83px;">
     html = '''
     <hr>
     <h1 align="center">Patient Case Report Form</h1>
@@ -113,41 +114,36 @@ def html_maker(list_content, narms):
     </div>
     <img src="eCRx_logo.png" alt="eCRx Logo" style="float:left;width:10px;height:8.3px;">
     '''
-    #  line 123  MER	Meropenem: ''' + table_narms['MER_Concl'] + '''<br>
-    #fileb = open('html_out.txt','w')
-    #fileb.write(html)
-    print(table_narms)
     return html
 
-def pdfgenerator(df, df2):
-    data_row = df.iloc[0]
-    list = (data_row.tolist())
-    html = html_maker(list, df2)
+def pdfgenerator(df1, df2):
+    '''generate pdf by html file'''
+    data_row = df1.iloc[0]
+    list_tem = (data_row.tolist())
+    html = html_maker(list_tem, df2)
     pdf = HTML2PDF()
     pdf.add_page()
     pdf.write_html(html)
     pdf.output('html2pdf.pdf')
 
 def get_report(subject_id, year, age):
-    df=pd.read_csv('test_file.csv')
-    list_tolist = reversed(['hadm_id', 'Code', 'Descriptor',	'icd9_code',
-    'long_title', 'admission_type',	'diagnosis', 'insurance', 'language', 'religion',
-    'marital_status', 'ethnicity', 	'gender', 'expire_flag', 'age',	'age_death',
-    'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
-    'drug_type', 'drug', 'formulary_drug_cd'])
+    '''main report generator program'''
+    df1 = pd.read_csv('test_file.csv')
+    list_tolist = reversed(['hadm_id', 'Code', 'Descriptor', 'icd9_code',
+                            'long_title', 'admission_type',	'diagnosis', 'insurance',
+                            'language', 'religion', 'marital_status', 'ethnicity',
+                            'gender', 'expire_flag', 'age', 'age_death',
+                            'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
+                            'drug_type', 'drug', 'formulary_drug_cd'])
 
-    table = qu.querySingle(df, 'subject_id', subject_id, ["subject_id"], list_tolist, ["subject_id"])
+    table = qu.querySingle(df1, 'subject_id', subject_id, ["subject_id"],
+                           list_tolist, ["subject_id"])
 
     for column in list_tolist:
         if column not in list(table.columns.values):
             table[column] = 'Nah'
-    #print(table.columns.values)
-
-
-    table_narms = qu.narms_query("narm's processed.csv", year,  age)
-
-
-    pdfgenerator(table,table_narms)
+    table_narms = qu.narms_query("narm's processed.csv", year, age)
+    pdfgenerator(table, table_narms)
 
 if __name__ == '__main__':
     get_report(61, 1996, '0-4')
