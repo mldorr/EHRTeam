@@ -13,7 +13,7 @@ class HTML2PDF(FPDF, HTMLMixin):
 def html_maker(list_content, narms):
     '''make the html file for pdf generator'''
     list_name = ['subject_id', 'hadm_id', 'Code', 'Descriptor',	'icd9_code',
-                 'long_title', 'admission_type',	'diagnosis', 'insurance', 'language', 'religion',
+                 'long_title', 'admission_type', 'diagnosis', 'insurance', 'language', 'religion',
                  'marital_status', 'ethnicity', 'gender', 'expire_flag', 'age',	'age_death',
                  'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
                  'drug_type', 'drug', 'formulary_drug_cd']

@@ -53,28 +53,27 @@ def narms_query(file_name, data_year, age_group,output_filename = 'narms_out.csv
     df_all = pd.read_csv(file_name)
     df_all = df_all.loc[df_all['Data_Year'] == data_year]
     df_all = df_all.loc[df_all['Age_Group'] == age_group]
-    for column in list(df_all.columns.values):
-        #print(column)
-        #print(df_all.iloc[0, df_all.columns.get_loc(column)])
-        if(df_all.iloc[0, df_all.columns.get_loc(column)] == 0):
-            df_all = df_all.drop(columns = column)
-    print(list(df_all.columns.values))
+    #for column in list(df_all.columns.values):
+    #    if(df_all.iloc[0, df_all.columns.get_loc(column)] == 0):
+    #        df_all = df_all.drop(columns = column)
+    #print(list(df_all.columns.values))
     df_all.to_csv(output_filename,index = False)
-    print('successful')
+    #print('successful')
+    return df_all
 
 if __name__ == '__main__':
-    #narms_query("narm's processed.csv", 1996, '0-4')
+    df_all = narms_query("narm's processed.csv", 1996, '0-4')
 
-    df=pd.read_csv('test_file.csv')
+    #df=pd.read_csv('test_file.csv')
     #df = pd.DataFrame(data=d)
     #subject_ids = int(input('Enter subject_id (e.g., 61): '))
-    list_tolist = ['hadm_id', 'Code', 'Descriptor',	'icd9_code',
-    'long_title', 'admission_type',	'diagnosis', 'insurance', 'language', 'religion',
-    'marital_status', 'ethnicity', 	'gender', 'expire_flag', 'age',	'age_death',
-    'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
-    'drug_type', 'drug', 'formulary_drug_cd']
-    output=querySingle(df,'subject_id', 61, ["subject_id"],list_tolist, "subject_id")
+    #list_tolist = ['hadm_id', 'Code', 'Descriptor',	'icd9_code',
+    #'long_title', 'admission_type',	'diagnosis', 'insurance', 'language', 'religion',
+    #'marital_status', 'ethnicity', 	'gender', 'expire_flag', 'age',	'age_death',
+    #'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
+    #'drug_type', 'drug', 'formulary_drug_cd']
+    #output=querySingle(df,'subject_id', 61, ["subject_id"],list_tolist, "subject_id")
     #output = filter(output, 'subject_id', 66, '<'  )
-    print(output)
+    #print(output)
     #output.to_csv('test_out.csv',index = False)
     #outputs=pd.read_csv('test_out.csv')
