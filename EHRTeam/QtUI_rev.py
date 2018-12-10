@@ -9,7 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
 import query as qu
-from database_build import main as ma
+import database_build
 
 class Ui_Output1Window(object):
     def loadData(self, df):
@@ -610,7 +610,8 @@ class Ui_Output1Window(object):
 
     def get_report(self, subject_id, birth_year):
         '''main report generator program'''
-        df1 = pd.read_csv('../Data/test_file.csv')
+        database_build.main()
+        df1 = pd.read_csv('../Data/out.csv')
         list_tolist = reversed(['hadm_id', 'Code', 'Descriptor', 'icd9_code',
                                 'long_title', 'admission_type', 'diagnosis', 'insurance',
                                 'language', 'religion', 'marital_status', 'ethnicity',

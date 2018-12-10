@@ -357,15 +357,15 @@ def merge_processor(DIAGNOSES_ICD, D_DIAGNOSES_ICD, PROCEDURES_ICD, D_PROCEDURES
 
 def main():
     """merges everything"""
-    PRESCRIPTIONS = pd.read_csv("mimic_prescriptions.csv")
-    DIAGNOSES_ICD = pd.read_csv("mimic_diagnoses_icd.csv")
-    D_DIAGNOSES_ICD = pd.read_csv("mimic_d_diagnoses_icd.csv")
-    ADMISSIONS = pd.read_csv("mimic_admissions.csv")
-    DRGCODES = pd.read_csv("mimic_drgcodes.csv")
-    PROCEDURES_ICD = pd.read_csv("mimic_procedures_icd.csv")
-    D_PROCEDURES_ICD = pd.read_csv("mimic_d_procedures_icd.csv")
-    SALMONELLA_TC = pd.read_csv("salmonellaRCTC.csv")
-    NARMS = pd.read_csv("IsolateData.csv", low_memory=False)
+    PRESCRIPTIONS = pd.read_csv("../Data/mimic_prescriptions.csv")
+    DIAGNOSES_ICD = pd.read_csv("../Data/mimic_diagnoses_icd.csv")
+    D_DIAGNOSES_ICD = pd.read_csv("../Data/mimic_d_diagnoses_icd.csv")
+    ADMISSIONS = pd.read_csv("../Data/mimic_admissions.csv")
+    DRGCODES = pd.read_csv("../Data/mimic_drgcodes.csv")
+    PROCEDURES_ICD = pd.read_csv("../Data/mimic_procedures_icd.csv")
+    D_PROCEDURES_ICD = pd.read_csv("../Data/mimic_d_procedures_icd.csv")
+    SALMONELLA_TC = pd.read_csv("../Data/salmonellaRCTC.csv")
+    NARMS = pd.read_csv("../Data/IsolateData.csv", low_memory=False)
 
     SALMONELLA_ICD = salmonellaRCTC_processor(SALMONELLA_TC)
     #Admissions
@@ -381,7 +381,7 @@ def main():
                                            D_PROCEDURES_ICD, SALMONELLA_ICD, ADMISSIONS2,
                                            DRGCODES, PRESCRIPTIONS)
     print('database creation successful')
-    MERGE_ALL_SALMONELLA.to_csv('out.csv')
+    MERGE_ALL_SALMONELLA.to_csv('../Data/out.csv')
 
 if __name__ == '__main__':
     main()
