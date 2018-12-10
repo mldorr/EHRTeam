@@ -52,6 +52,12 @@ def html_maker(list_content, narms):
 
     variable['age'] = int(float(variable['age']))
     variable['age'] = str(variable['age'])
+    variable['age_death'] = int(float(variable['age_death']))
+    variable['age_death'] = str(variable['age_death'])
+    if variable['expire_flag'] == '1' :
+        variable['expire_flag'] = 'Death'
+    else :
+        variable['expire_flag'] = 'Live'
     html = '''
     <hr>
     <h1 align="center">Patient Case Report Form</h1>
