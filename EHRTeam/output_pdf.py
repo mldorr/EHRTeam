@@ -52,7 +52,7 @@ def html_maker(list_content, narms):
     variable['drug'] = variable['drug'].replace("'"," ")
     variable['age'] = int(float(variable['age']))
     variable['age'] = str(variable['age'])
-    
+
     if (variable['age_death'] != 'nan'):
         variable['age_death'] = int(float(variable['age_death']))
         variable['age_death'] = str(variable['age_death'])
@@ -151,7 +151,7 @@ def pdfgenerator(df1, df2):
 
 def get_report(subject_id, birth_year):
     '''main report generator program'''
-    df1 = pd.read_csv('test_file.csv')
+    df1 = pd.read_csv("../Data/test_file.csv")
     list_tolist = reversed(['hadm_id', 'Code', 'Descriptor', 'icd9_code',
                             'long_title', 'admission_type',	'diagnosis', 'insurance',
                             'language', 'religion', 'marital_status', 'ethnicity',
@@ -190,7 +190,7 @@ def get_report(subject_id, birth_year):
     for column in list_tolist:
         if column not in list(table.columns.values):
             table[column] = 'Nah'
-    table_narms = qu.narms_query("narm's processed.csv", year, age)
+    table_narms = qu.narms_query("../Data/test_file.csv", year, age)
     pdfgenerator(table, table_narms)
 
 if __name__ == '__main__':
