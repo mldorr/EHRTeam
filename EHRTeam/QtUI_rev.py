@@ -7,9 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import pandas as pd
+import query as qu
 
 class Ui_Output1Window(object):
-    def setupUi(self, Output1Window, PATIENT_ID):
+    def setupUi(self, Output1Window, PATIENT_ID, BIRTHYEAR):
         Output1Window.setObjectName("Output1Window")
         Output1Window.resize(884, 824)
         self.centralwidget = QtWidgets.QWidget(Output1Window)
@@ -88,67 +90,67 @@ class Ui_Output1Window(object):
         self.label_19.setFont(font)
         self.label_19.setObjectName("label_19")
         self.subject_id = QtWidgets.QLabel(self.groupBox_2)
-        self.subject_id.setGeometry(QtCore.QRect(130, 26, 161, 20))
+        self.subject_id.setGeometry(QtCore.QRect(130, 26, 251, 20))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.subject_id.setFont(font)
         self.subject_id.setObjectName("subject_id")
         self.hadm_id = QtWidgets.QLabel(self.groupBox_2)
-        self.hadm_id.setGeometry(QtCore.QRect(130, 40, 71, 21))
+        self.hadm_id.setGeometry(QtCore.QRect(130, 40, 251, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.hadm_id.setFont(font)
         self.hadm_id.setObjectName("hadm_id")
         self.age = QtWidgets.QLabel(self.groupBox_2)
-        self.age.setGeometry(QtCore.QRect(130, 50, 35, 31))
+        self.age.setGeometry(QtCore.QRect(130, 50, 251, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.age.setFont(font)
         self.age.setObjectName("age")
         self.expire_flag = QtWidgets.QLabel(self.groupBox_2)
-        self.expire_flag.setGeometry(QtCore.QRect(130, 70, 71, 21))
+        self.expire_flag.setGeometry(QtCore.QRect(130, 70, 251, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.expire_flag.setFont(font)
         self.expire_flag.setObjectName("expire_flag")
         self.age_death = QtWidgets.QLabel(self.groupBox_2)
-        self.age_death.setGeometry(QtCore.QRect(130, 80, 61, 31))
+        self.age_death.setGeometry(QtCore.QRect(130, 80, 251, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.age_death.setFont(font)
         self.age_death.setObjectName("age_death")
         self.gender = QtWidgets.QLabel(self.groupBox_2)
-        self.gender.setGeometry(QtCore.QRect(130, 100, 35, 21))
+        self.gender.setGeometry(QtCore.QRect(130, 100, 251, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.gender.setFont(font)
         self.gender.setObjectName("gender")
         self.ethnicity = QtWidgets.QLabel(self.groupBox_2)
-        self.ethnicity.setGeometry(QtCore.QRect(130, 110, 41, 31))
+        self.ethnicity.setGeometry(QtCore.QRect(130, 110, 251, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.ethnicity.setFont(font)
         self.ethnicity.setObjectName("ethnicity")
         self.language = QtWidgets.QLabel(self.groupBox_2)
-        self.language.setGeometry(QtCore.QRect(130, 130, 81, 21))
+        self.language.setGeometry(QtCore.QRect(130, 130, 251, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.language.setFont(font)
         self.language.setObjectName("language")
         self.marital_status = QtWidgets.QLabel(self.groupBox_2)
-        self.marital_status.setGeometry(QtCore.QRect(130, 139, 71, 31))
+        self.marital_status.setGeometry(QtCore.QRect(130, 139, 251, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.marital_status.setFont(font)
         self.marital_status.setObjectName("marital_status")
         self.religion = QtWidgets.QLabel(self.groupBox_2)
-        self.religion.setGeometry(QtCore.QRect(130, 160, 41, 21))
+        self.religion.setGeometry(QtCore.QRect(130, 160, 251, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.religion.setFont(font)
         self.religion.setObjectName("religion")
         self.insurance = QtWidgets.QLabel(self.groupBox_2)
-        self.insurance.setGeometry(QtCore.QRect(130, 170, 51, 31))
+        self.insurance.setGeometry(QtCore.QRect(130, 170, 251, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.insurance.setFont(font)
@@ -205,37 +207,37 @@ class Ui_Output1Window(object):
         self.label_64.setFont(font)
         self.label_64.setObjectName("label_64")
         self.Code = QtWidgets.QLabel(self.groupBox_4)
-        self.Code.setGeometry(QtCore.QRect(170, 26, 141, 20))
+        self.Code.setGeometry(QtCore.QRect(170, 26, 231, 20))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.Code.setFont(font)
         self.Code.setObjectName("Code")
         self.Descriptor = QtWidgets.QLabel(self.groupBox_4)
-        self.Descriptor.setGeometry(QtCore.QRect(170, 40, 71, 21))
+        self.Descriptor.setGeometry(QtCore.QRect(170, 40, 231, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.Descriptor.setFont(font)
         self.Descriptor.setObjectName("Descriptor")
         self.long_title = QtWidgets.QLabel(self.groupBox_4)
-        self.long_title.setGeometry(QtCore.QRect(170, 50, 35, 31))
+        self.long_title.setGeometry(QtCore.QRect(170, 50, 231, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.long_title.setFont(font)
         self.long_title.setObjectName("long_title")
         self.admission_type = QtWidgets.QLabel(self.groupBox_4)
-        self.admission_type.setGeometry(QtCore.QRect(170, 70, 71, 21))
+        self.admission_type.setGeometry(QtCore.QRect(170, 70, 231, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.admission_type.setFont(font)
         self.admission_type.setObjectName("admission_type")
         self.admit_new = QtWidgets.QLabel(self.groupBox_4)
-        self.admit_new.setGeometry(QtCore.QRect(170, 80, 61, 31))
+        self.admit_new.setGeometry(QtCore.QRect(170, 80, 231, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.admit_new.setFont(font)
         self.admit_new.setObjectName("admit_new")
         self.disch_new = QtWidgets.QLabel(self.groupBox_4)
-        self.disch_new.setGeometry(QtCore.QRect(170, 100, 35, 21))
+        self.disch_new.setGeometry(QtCore.QRect(170, 100, 231, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.disch_new.setFont(font)
@@ -243,7 +245,7 @@ class Ui_Output1Window(object):
         self.groupBox_5 = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_5.setGeometry(QtCore.QRect(450, 230, 411, 101))
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(10)
         self.groupBox_5.setFont(font)
         self.groupBox_5.setAcceptDrops(True)
         self.groupBox_5.setObjectName("groupBox_5")
@@ -265,7 +267,7 @@ class Ui_Output1Window(object):
         self.groupBox_3 = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_3.setGeometry(QtCore.QRect(10, 340, 851, 381))
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(10)
         self.groupBox_3.setFont(font)
         self.groupBox_3.setAcceptDrops(True)
         self.groupBox_3.setObjectName("groupBox_3")
@@ -486,24 +488,7 @@ class Ui_Output1Window(object):
         self.retranslateUi(Output1Window)
         QtCore.QMetaObject.connectSlotsByName(Output1Window)
 
-        self.subject_id.setText(": " + str(PATIENT_ID))
-        self.hadm_id.setText(": " + str(PATIENT_ID))
-        self.age.setText(": " + str(PATIENT_ID))
-        self.expire_flag.setText(": " + str(PATIENT_ID))
-        self.age_death.setText(": " + str(PATIENT_ID))
-        self.gender.setText(": " + str(PATIENT_ID))
-        self.ethnicity.setText(": " + str(PATIENT_ID))
-        self.language.setText(": " + str(PATIENT_ID))
-        self.marital_status.setText(": " + str(PATIENT_ID))
-        self.religion.setText(": " + str(PATIENT_ID))
-        self.insurance.setText(": " + str(PATIENT_ID))
-        
-        self.Code.setText(": " + str(PATIENT_ID))
-        self.Descriptor.setText(": " + str(PATIENT_ID))
-        self.long_title.setText(": " + str(PATIENT_ID))
-        self.admission_type.setText(": " + str(PATIENT_ID))
-        self.admit_new.setText(": " + str(PATIENT_ID))
-        self.disch_new.setText(": " + str(PATIENT_ID))
+        self.query_values(PATIENT_ID, BIRTHYEAR)
 
     def retranslateUi(self, Output1Window):
         _translate = QtCore.QCoreApplication.translate
@@ -583,6 +568,123 @@ class Ui_Output1Window(object):
         self.label_95.setText(_translate("Output1Window", "KAN Kanamycin"))
         self.label_97.setText(_translate("Output1Window", "TIO Ceftiofur"))
 
+    def query_values(self, PATIENT_ID, BIRTHYEAR):
+        variable, table_narms = self.get_report(PATIENT_ID, BIRTHYEAR)
+        print(table_narms)
+        self.subject_id.setText(": " + str(variable['subject_id']))
+        self.hadm_id.setText(": " + str(variable['hadm_id']))
+        self.age.setText(": " + str(variable['age']))
+        self.expire_flag.setText(": " + str(variable['expire_flag']))
+        self.age_death.setText(": " + str(variable['age_death']))
+        self.gender.setText(": " + str(variable['gender']))
+        self.ethnicity.setText(": " + str(variable['ethnicity']))
+        self.language.setText(": " + str(variable['language']))
+        self.marital_status.setText(": " + str(variable['marital_status']))
+        self.religion.setText(": " + str(variable['religion']))
+        self.insurance.setText(": " + str(variable['insurance']))
+        
+        self.Code.setText(": " + str(variable['Code']))
+        self.Descriptor.setText(": " + str(variable['Descriptor']))
+        self.long_title.setText(": " + str(variable['long_title']))
+        self.admission_type.setText(": " + str(variable['admission_type']))
+        self.admit_new.setText(": " + str(variable['admit_new']))
+        self.disch_new.setText(": " + str(variable['disch_new']))
+        self.textBrowser.setText(str(variable['drug']))
+
+    def get_report(self, subject_id, birth_year):
+        '''main report generator program'''
+        df1 = pd.read_csv('test_file.csv')
+        list_tolist = reversed(['hadm_id', 'Code', 'Descriptor', 'icd9_code',
+                                'long_title', 'admission_type', 'diagnosis', 'insurance',
+                                'language', 'religion', 'marital_status', 'ethnicity',
+                                'gender', 'expire_flag', 'age', 'age_death',
+                                'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
+                                'drug_type', 'drug', 'formulary_drug_cd'])
+
+        table = qu.query_single(df1, 'subject_id', int(subject_id), ["subject_id"],
+                               list_tolist, ["subject_id"])
+
+        patient_age = int(table['age'][0][0])
+        year = birth_year + patient_age
+
+        if patient_age <= 4 :
+            age = '0-4'
+        elif patient_age <= 9:
+            age = '5-9'
+        elif patient_age <= 19:
+            age = '10-19'
+        elif patient_age <= 29:
+            age = '20-29'
+        elif patient_age <= 39:
+            age = '30-39'
+        elif patient_age <= 49:
+            age = '40-49'
+        elif patient_age <= 59:
+            age = '50-59'
+        elif patient_age <= 69:
+            age = '60-69'
+        elif patient_age <= 79:
+            age = '70-79'
+        elif patient_age >= 80:
+            age = '80+'
+
+        for column in list_tolist:
+            if column not in list(table.columns.values):
+                table[column] = 'Nah'
+        narms = qu.narms_query("narm's processed.csv", year, age)
+
+        data_row = table.iloc[0]
+        list_content = (data_row.tolist())
+
+        list_name = ['subject_id', 'hadm_id', 'Code', 'Descriptor', 'icd9_code',
+                     'long_title', 'admission_type', 'diagnosis', 'insurance', 'language', 'religion',
+                     'marital_status', 'ethnicity', 'gender', 'expire_flag', 'age', 'age_death',
+                     'age_group', 'admit_year', 'admit_new', 'disch_new', 'description',
+                     'drug_type', 'drug', 'formulary_drug_cd']
+
+        list_narms = ['Data_Year', 'Age_Group', 'Specimen_ID', 'Resistance_Pattern', 'AMI_Concl',
+                      'AMP_Concl', 'ATM_Concl', 'AUG_Concl', 'AXO_Concl', 'AZM_Concl', 'CAZ_Concl',
+                      'CCV_Concl', 'CEP_Concl', 'CEQ_Concl', 'CHL_Concl', 'CIP_Concl', 'CLI_Concl',
+                      'COT_Concl', 'CTC_Concl', 'CTX_Concl', 'ERY_Concl', 'FEP_Concl', 'FFN_Concl',
+                      'FIS_Concl', 'FOX_Concl', 'GEN_Concl', 'IMI_Concl', 'KAN_Concl', 'NAL_Concl',
+                      'PTZ_Concl', 'SMX_Concl', 'STR_Concl', 'TEL_Concl', 'TET_Concl', 'TIO_Concl']
+
+        variable = {}
+        table_narms = {}
+
+        for count in range(0, len(list_name)):
+            cell = list_content[count]
+            if isinstance(cell, list):
+                if (len(cell) > 1 and list_name[count] != 'drug'):
+                    list_content[count] = list_content[count][:1]
+                elif list_name[count] == 'drug':
+                    list_content[count] = list_content[count][:50]
+            list_content[count] = str(list_content[count])
+            variable[list_name[count]] = list_content[count]
+    
+        for count in range(0, len(list_narms)):
+            table_narms[list_narms[count]] = str(narms.iloc[0][count])
+
+        for item in variable.keys():
+            values_tem = variable[item]
+            if (values_tem[0] == '[' and values_tem[1] == "'" and
+               values_tem[len(values_tem) - 2] == "'" and
+               values_tem[len(values_tem) - 1] == ']') :
+               variable[item] = values_tem[2:(len(variable[item]) - 2)]
+            elif (values_tem[0] == '[' and
+               values_tem[len(values_tem) - 1] == ']') :
+               variable[item] = values_tem[1:(len(variable[item]) - 1)]
+
+        variable['age'] = int(float(variable['age']))
+        variable['age'] = str(variable['age'])
+        variable['age_death'] = int(float(variable['age_death']))
+        variable['age_death'] = str(variable['age_death'])
+        if variable['expire_flag'] == '1' :
+            variable['expire_flag'] = 'Death'
+        else :
+            variable['expire_flag'] = 'Live'
+
+        return variable, table_narms
 
 if __name__ == "__main__":
     import sys
@@ -590,6 +692,7 @@ if __name__ == "__main__":
     Output1Window = QtWidgets.QMainWindow()
     ui = Ui_Output1Window()
     ui.setupUi(Output1Window)
+    ui.query_values(Output1Window)
     Output1Window.show()
     sys.exit(app.exec_())
 
