@@ -21,23 +21,23 @@ def admissions_processor(ADMISSIONS):
     """
     ADMISSIONS['age_group'] = pd.Series(np.zeros(ADMISSIONS.shape[0]))
     ADMISSIONS.loc[(ADMISSIONS['age'] > 0) &
-               (ADMISSIONS['age'] < 5), 'age_group'] = '0-4'
+                   (ADMISSIONS['age'] < 5), 'age_group'] = '0-4'
     ADMISSIONS.loc[(ADMISSIONS['age'] >= 5) &
-               (ADMISSIONS['age'] < 10), 'age_group'] = '5-9'
+                   (ADMISSIONS['age'] < 10), 'age_group'] = '5-9'
     ADMISSIONS.loc[(ADMISSIONS['age'] >= 10) &
-               (ADMISSIONS['age'] < 20), 'age_group'] = '10-19'
+                   (ADMISSIONS['age'] < 20), 'age_group'] = '10-19'
     ADMISSIONS.loc[(ADMISSIONS['age'] >= 20) &
-               (ADMISSIONS['age'] < 30), 'age_group'] = '20-29'
+                   (ADMISSIONS['age'] < 30), 'age_group'] = '20-29'
     ADMISSIONS.loc[(ADMISSIONS['age'] >= 30) &
-               (ADMISSIONS['age'] < 40), 'age_group'] = '30-39'
+                   (ADMISSIONS['age'] < 40), 'age_group'] = '30-39'
     ADMISSIONS.loc[(ADMISSIONS['age'] >= 40) &
-               (ADMISSIONS['age'] < 50), 'age_group'] = '40-49'
+                   (ADMISSIONS['age'] < 50), 'age_group'] = '40-49'
     ADMISSIONS.loc[(ADMISSIONS['age'] >= 50) &
-               (ADMISSIONS['age'] < 60), 'age_group'] = '50-59'
+                   (ADMISSIONS['age'] < 60), 'age_group'] = '50-59'
     ADMISSIONS.loc[(ADMISSIONS['age'] >= 60) &
-               (ADMISSIONS['age'] < 70), 'age_group'] = '60-69'
+                   (ADMISSIONS['age'] < 70), 'age_group'] = '60-69'
     ADMISSIONS.loc[(ADMISSIONS['age'] >= 70) &
-               (ADMISSIONS['age'] < 80), 'age_group'] = '70-79'
+                   (ADMISSIONS['age'] < 80), 'age_group'] = '70-79'
     ADMISSIONS.loc[(ADMISSIONS['age'] >= 80), 'age_group'] = '80+'
 
     ADMISSIONS['admittime'] = pd.to_datetime(ADMISSIONS['admittime'])
@@ -74,7 +74,6 @@ def admissions_processor(ADMISSIONS):
 
     #convert new variable to an integer
     ADMISSIONS2['admit_year'] = ADMISSIONS2['admit_year'].astype('int')
-    #ADMISSIONS2.head()
 
     #extract month and date
     ADMISSIONS2['admit_month'] = ADMISSIONS2['admittime'].dt.month
@@ -145,7 +144,7 @@ def admissions_processor(ADMISSIONS):
 
     ADMISSIONS2.drop(['disch_year', 'disch_month', 'disch_day'], axis=1, inplace=True)
 
-    return (ADMISSIONS,ADMISSIONS2)
+    return (ADMISSIONS, ADMISSIONS2)
 
 def narms_processor(NARMS):
     """
@@ -205,7 +204,8 @@ def narms_processor(NARMS):
     NARMS_CUT[COLS] = NARMS_CUT[COLS].replace({0:np.nan})
 
     #Convert Resistance Pattern
-    NARMS_CUT['Resistance_Pattern'] = (NARMS_CUT['Resistance_Pattern'] != 'No resistance detected').astype(int)
+    NARMS_CUT['Resistance_Pattern'] = (NARMS_CUT['Resistance_Pattern'] !=
+                                      'No resistance detected').astype(int)
     COLS = ['Resistance_Pattern']
     NARMS_CUT[COLS] = NARMS_CUT[COLS].replace({0:np.nan})
 
@@ -287,12 +287,12 @@ def narms_processor(NARMS):
     #year and age group, which should match to the patient's year + age
     #but this is what I have for now
     ###################################
-    NARMS_YEAR1 = NARMS_YEAR.query('Data_Year == 2008')
-    NARMS_YEAR_AGE1 = NARMS_YEAR_AGE.query('Data_Year == 2008 & Age_Group == "0-4"')
+    #NARMS_YEAR1 = NARMS_YEAR.query('Data_Year == 2008')
+    #NARMS_YEAR_AGE1 = NARMS_YEAR_AGE.query('Data_Year == 2008 & Age_Group == "0-4"')
 
     #Build a table with the above information
-    FRAMES = [NARMS_YEAR1, NARMS_YEAR_AGE1]
-    NARMS_PATIENT = pd.concat(FRAMES, sort=True)
+    #FRAMES = [NARMS_YEAR1, NARMS_YEAR_AGE1]
+    #NARMS_PATIENT = pd.concat(FRAMES, sort=true)
 
     return (NARMS_YEAR, NARMS_YEAR_AGE)
 
@@ -302,8 +302,8 @@ def merge_processor(DIAGNOSES_ICD, D_DIAGNOSES_ICD, PROCEDURES_ICD, D_PROCEDURES
     Merge imported datasets
     """
     print('header', list(DIAGNOSES_ICD.columns.values))
-    #Merge diagnoses with its definitions
 
+    #Merge diagnoses with its definitions
     MERGE_DIAGNOSES = pd.merge(DIAGNOSES_ICD.drop(columns=['Unnamed: 0']),
                                D_DIAGNOSES_ICD.drop(columns=['Unnamed: 0']), how='inner',
                                left_on='icd9_code', right_on='icd9_code')
@@ -321,9 +321,11 @@ def merge_processor(DIAGNOSES_ICD, D_DIAGNOSES_ICD, PROCEDURES_ICD, D_PROCEDURES
     MERGE_DIAG_PROC_SALM = pd.merge(MERGE_DIAG_PROC, SALMONELLA_ICD
                                     , how='inner', left_on='icd9_code'
                                     , right_on='Code')
+
     #cut down columns
     MERGE_DIAG_PROC_SALM = MERGE_DIAG_PROC_SALM[['subject_id', 'hadm_id',
                                                  'Code', 'Descriptor']]
+
     #merge cases with all other diagnoses during that visit
     MERGE_DIAG_PROC_SALM = pd.merge(MERGE_DIAG_PROC_SALM, MERGE_DIAG_PROC,
                                     how='left', left_on=['subject_id', 'hadm_id'],
@@ -376,7 +378,8 @@ def main():
     NARMS_YEAR_AGE = NARMS_PROC[1]
     #Merge
     MERGE_ALL_SALMONELLA = merge_processor(DIAGNOSES_ICD, D_DIAGNOSES_ICD, PROCEDURES_ICD,
-                            D_PROCEDURES_ICD,SALMONELLA_ICD, ADMISSIONS2,DRGCODES,  PRESCRIPTIONS)
+                                           D_PROCEDURES_ICD, SALMONELLA_ICD, ADMISSIONS2,
+                                           DRGCODES, PRESCRIPTIONS)
     print('database creation successful')
     MERGE_ALL_SALMONELLA.to_csv('out.csv')
 

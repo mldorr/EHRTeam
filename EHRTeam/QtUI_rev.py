@@ -610,7 +610,7 @@ class Ui_Output1Window(object):
 
     def get_report(self, subject_id, birth_year):
         '''main report generator program'''
-        df1 = pd.read_csv('test_file.csv')
+        df1 = pd.read_csv('../Data/test_file.csv')
         list_tolist = reversed(['hadm_id', 'Code', 'Descriptor', 'icd9_code',
                                 'long_title', 'admission_type', 'diagnosis', 'insurance',
                                 'language', 'religion', 'marital_status', 'ethnicity',
@@ -649,7 +649,7 @@ class Ui_Output1Window(object):
         for column in list_tolist:
             if column not in list(table.columns.values):
                 table[column] = 'Nah'
-        narms = qu.narms_query("narm's processed.csv", year, age)
+        narms = qu.narms_query("../Data/narms_processed.csv", year, age)
 
         data_row = table.iloc[0]
         list_content = (data_row.tolist())
