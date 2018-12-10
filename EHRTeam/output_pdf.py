@@ -190,7 +190,7 @@ def get_report(subject_id, birth_year):
     for column in list_tolist:
         if column not in list(table.columns.values):
             table[column] = 'Nah'
-    table_narms = qu.narms_query("../Data/test_file.csv", year, age)
+    table_narms = qu.narms_query("../Data/narms_out.csv", year, age)
     pdfgenerator(table, table_narms)
 
 if __name__ == '__main__':
