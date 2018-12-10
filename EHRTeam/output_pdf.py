@@ -52,7 +52,7 @@ def html_maker(list_content, narms):
     variable['drug'] = variable['drug'].replace("'"," ")
     variable['age'] = int(float(variable['age']))
     variable['age'] = str(variable['age'])
-    print(variable['age_death'])
+    
     if (variable['age_death'] != 'nan'):
         variable['age_death'] = int(float(variable['age_death']))
         variable['age_death'] = str(variable['age_death'])
