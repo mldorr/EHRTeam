@@ -7,9 +7,6 @@ For our project, the database is a component of read-only structured data set th
 #### Query System  
 The query component is designed only to read from our database. It will be used as a pipeline for the analysis system and directly for the visualization as well. The query system not only can generate the specific elements from the database, but it also can pass a segmented data based on the keywords that the user wants to work or analyze on.  
   
-#### Analysis System
-This component will be our core processing system to implement our use cases. For instance, we need to apply some mathematical models to find a correlation and percentage number between the patient’s drug prescription and the drug resistance pattern in some area. Furthermore, we might also implement the formula for the distribution of the people affected by the disease. The analysis system is closely related to visualization manager because the result of the analysis should be visualized to make it understandable.  
-  
 #### Visualization  
 An interactive visualization of the dataset will be part of the final output for this project. This tool helps the user to understand the significance of the data by placing it to the visual context. We will provide several types of data presentation of the dataset, such tables and graphs to show patterns, trends, and correlations from our analysis system. Each of them will use different python packages to be implemented, specifically matplotlib, seaborn, bokeh, and arcGIS.  
 
@@ -30,13 +27,4 @@ Analysis System helps to analyze the data extracted from the Query System. Stati
 In the Use Case Ex1, users can use a query statement to query the data for features such as condition, patientId, region name and other associated features. The query system would then extract the related attributes and tuples from the database and generate a new table. Then, for example, a plot of the condition versus region heat map could be generated based on the table, so the user can intuitively comprehend the highest and lowest prevalence area based on the color ramp. The Analysis System would also analyze the new table; for example, LASSO regression with coordinate descent algorithm could be applied to help finding out what is the top three features that influence a specific condition. Finally, visualization GUI generates three scatterplots of the condition versus the three top associated features with regression curves on them.  
   
 The same process can be followed from Use Case Ex3. Users provide a query statement for the query system, and query system generates a new table of data from database, which includes outbreak number, range, peak and other related information. Then a plot of number of outbreak versus time could be generate based on the table. After that, we can apply PDA, ridge regression or other methods, depending on the distribution of data, to predict outbreak number in the future. Also, we may analyze its features to classify what kind of condition (e.g., influenza strain) it is by applying SVM classifier algorithm. Finally, a scatterplot with regression curve can be generated to show the prediction result.  
-
-### Preliminary Plan  
-* Merge data sets  
-* Identify focus for data  
-    * MIMIC: patient, presction, date, length of stay  
-    * NARMS: region, year, antibiotic status, condition  
-* Finalize dataset  
-* Assign pseudo code for the query and correlation system  
-* Visualize the output data based on the query  
 

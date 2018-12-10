@@ -31,9 +31,40 @@ For more details, please see LICENSE.TXT
 
   
 ### Organization  
-Directory Structure:  
+Directory Structure: 
+    License.py
+    README.py
+    setup.py
+    eCRx_logo.pnp
+    Data
+        IsolateData.csv
+        mimic_drgcodes.csv
+        mimic_admissions.csv
+        mimic_procedures_icd.csv
+        mimic_d_diagnoses_icd.csv
+        narm's processed.csv
+        mimic_d_procedures_icd.csv
+        salmonellaRCTC.csv
+        mimic_diagnoses_icd.csv
+    Docs
+        ComponentSpec.md
+        Final Presentation.pptx	FunctionalSpec.md
+    EHRTeam
+        MainWindow.py
+        narm's processed.csv
+        sql_import.py
+        QtUI_rev.py
+        output_pdf.py
+        test_file.csv
+        __pycache__
+        query.py
+        test_query.py
+        database_build.py
+        query_all_rows.py
+    Examples
+        
 
 ### Installation  
-To install eCRx:
+To install eCRx: Run setup.py
 
 *Created for CSE 583 at the University of Washington*
