@@ -49,7 +49,7 @@ def html_maker(list_content, narms):
         elif (values_tem[0] == '[' and
            values_tem[len(values_tem) - 1] == ']') :
            variable[item] = values_tem[1:(len(variable[item]) - 1)]
-
+    variable['drug'] = variable['drug'].replace("'"," ")
     variable['age'] = int(float(variable['age']))
     variable['age'] = str(variable['age'])
     variable['age_death'] = int(float(variable['age_death']))
@@ -133,6 +133,8 @@ def html_maker(list_content, narms):
     </div>
     <img src="eCRx_logo.png" alt="eCRx Logo" style="float:left;width:10px;height:8.3px;">
     '''
+    f = open('tem_out.csv','w')
+    f.write(html)
     return html
 
 def pdfgenerator(df1, df2):
