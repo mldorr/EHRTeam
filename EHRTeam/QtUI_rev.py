@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
 import query as qu
+from database_build import main as ma
 
 class Ui_Output1Window(object):
     def setupUi(self, Output1Window, PATIENT_ID, BIRTHYEAR):
@@ -570,7 +571,6 @@ class Ui_Output1Window(object):
 
     def query_values(self, PATIENT_ID, BIRTHYEAR):
         variable, table_narms = self.get_report(PATIENT_ID, BIRTHYEAR)
-        print(table_narms)
         self.subject_id.setText(": " + str(variable['subject_id']))
         self.hadm_id.setText(": " + str(variable['hadm_id']))
         self.age.setText(": " + str(variable['age']))
@@ -582,7 +582,7 @@ class Ui_Output1Window(object):
         self.marital_status.setText(": " + str(variable['marital_status']))
         self.religion.setText(": " + str(variable['religion']))
         self.insurance.setText(": " + str(variable['insurance']))
-        
+
         self.Code.setText(": " + str(variable['Code']))
         self.Descriptor.setText(": " + str(variable['Descriptor']))
         self.long_title.setText(": " + str(variable['long_title']))
@@ -604,7 +604,8 @@ class Ui_Output1Window(object):
         table = qu.query_single(df1, 'subject_id', int(subject_id), ["subject_id"],
                                list_tolist, ["subject_id"])
 
-        patient_age = int(table['age'][0][0])
+        ages = table['age'].tolist()
+        patient_age = int(ages[0][0])
         year = birth_year + patient_age
 
         if patient_age <= 4 :
@@ -661,7 +662,7 @@ class Ui_Output1Window(object):
                     list_content[count] = list_content[count][:50]
             list_content[count] = str(list_content[count])
             variable[list_name[count]] = list_content[count]
-    
+
         for count in range(0, len(list_narms)):
             table_narms[list_narms[count]] = str(narms.iloc[0][count])
 
@@ -677,8 +678,9 @@ class Ui_Output1Window(object):
 
         variable['age'] = int(float(variable['age']))
         variable['age'] = str(variable['age'])
-        variable['age_death'] = int(float(variable['age_death']))
-        variable['age_death'] = str(variable['age_death'])
+        if (variable['age_death'] != 'nan'):
+            variable['age_death'] = int(float(variable['age_death']))
+            variable['age_death'] = str(variable['age_death'])
         if variable['expire_flag'] == '1' :
             variable['expire_flag'] = 'Death'
         else :
@@ -695,4 +697,3 @@ if __name__ == "__main__":
     ui.query_values(Output1Window)
     Output1Window.show()
     sys.exit(app.exec_())
-

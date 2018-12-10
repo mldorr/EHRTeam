@@ -49,11 +49,13 @@ def html_maker(list_content, narms):
         elif (values_tem[0] == '[' and
            values_tem[len(values_tem) - 1] == ']') :
            variable[item] = values_tem[1:(len(variable[item]) - 1)]
-
+    variable['drug'] = variable['drug'].replace("'"," ")
     variable['age'] = int(float(variable['age']))
     variable['age'] = str(variable['age'])
-    variable['age_death'] = int(float(variable['age_death']))
-    variable['age_death'] = str(variable['age_death'])
+    
+    if (variable['age_death'] != 'nan'):
+        variable['age_death'] = int(float(variable['age_death']))
+        variable['age_death'] = str(variable['age_death'])
     if variable['expire_flag'] == '1' :
         variable['expire_flag'] = 'Death'
     else :
@@ -133,6 +135,8 @@ def html_maker(list_content, narms):
     </div>
     <img src="eCRx_logo.png" alt="eCRx Logo" style="float:left;width:10px;height:8.3px;">
     '''
+    f = open('tem_out.csv','w')
+    f.write(html)
     return html
 
 def pdfgenerator(df1, df2):
@@ -157,8 +161,8 @@ def get_report(subject_id, birth_year):
 
     table = qu.query_single(df1, 'subject_id', subject_id, ["subject_id"],
                            list_tolist, ["subject_id"])
-
-    patient_age = int(table['age'][0][0])
+    ages = table['age'].tolist()
+    patient_age = int(ages[0][0])
 
     year = birth_year + patient_age
 
