@@ -382,6 +382,7 @@ def main():
                                            DRGCODES, PRESCRIPTIONS)
     print('database creation successful')
     MERGE_ALL_SALMONELLA.to_csv('out.csv')
+    NARMS_YEAR.to_csv('narms_processed')
 
 if __name__ == '__main__':
     main()
