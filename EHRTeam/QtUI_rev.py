@@ -505,7 +505,7 @@ class UiOutput1Window(object):
         self.statusbar.setObjectName("statusbar")
         output_1_window.setStatusBar(self.statusbar)
 
-        self.retranslateUi(output_1_window)
+        self.retranslate_ui(output_1_window)
         QtCore.QMetaObject.connectSlotsByName(output_1_window)
 
         self.query_values(patient_id, birth_year)
