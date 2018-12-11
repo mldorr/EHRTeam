@@ -38,11 +38,11 @@ Directory Structure:
     setup.py  
     eCRx_logo.pnp  
     Data  
-&nbsp;&nbsp;&nbsp;&nbsp;IsolateData.csv  
-&nbsp;&nbsp;&nbsp;&nbsp;mimic_drgcodes.csv  
-&nbsp;&nbsp;&nbsp;&nbsp;mimic_admissions.csv  
-&nbsp;&nbsp;&nbsp;&nbsp;        mimic_procedures_icd.csv  
-&nbsp;&nbsp;&nbsp;&nbsp;        mimic_d_diagnoses_icd.csv  
+        IsolateData.csv
+        mimic_drgcodes.csv  
+        mimic_admissions.csv  
+        mimic_procedures_icd.csv  
+        mimic_d_diagnoses_icd.csv  
         narm's processed.csv  
         mimic_d_procedures_icd.csv  
         salmonellaRCTC.csv  
