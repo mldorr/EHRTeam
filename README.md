@@ -31,40 +31,42 @@ For more details, please see LICENSE.TXT
 
   
 ### Organization  
-Directory Structure: 
-    License.py
-    README.py
-    setup.py
-    eCRx_logo.pnp
-    Data
-        IsolateData.csv
-        mimic_drgcodes.csv
-        mimic_admissions.csv
-        mimic_procedures_icd.csv
-        mimic_d_diagnoses_icd.csv
-        narm's processed.csv
-        mimic_d_procedures_icd.csv
-        salmonellaRCTC.csv
-        mimic_diagnoses_icd.csv
-    Docs
-        ComponentSpec.md
-        Final Presentation.pptx	FunctionalSpec.md
-    EHRTeam
-        MainWindow.py
-        narm's processed.csv
-        sql_import.py
-        QtUI_rev.py
-        output_pdf.py
-        test_file.csv
-        __pycache__
-        query.py
-        test_query.py
-        database_build.py
-        query_all_rows.py
-    Examples
+Directory Structure:   
+    License.py  
+    README.py  
+    setup.py  
+    eCRx_logo.pnp  
+    Data  
+        IsolateData.csv  
+        mimic_drgcodes.csv  
+        mimic_admissions.csv  
+        mimic_procedures_icd.csv  
+        mimic_d_diagnoses_icd.csv  
+        narm's processed.csv  
+        mimic_d_procedures_icd.csv  
+        salmonellaRCTC.csv  
+        mimic_diagnoses_icd.csv  
+    Docs  
+        ComponentSpec.md  
+        Final Presentation.pptx	 
+        FunctionalSpec.md  
+    EHRTeam  
+        MainWindow.py    
+        QtUI_rev.py  
+        database_build.py  
+        output_pdf.py  
+        output_pdf_test.py
+        query.py  
+        sql_import.py  
+        test_query.py  
+        test_MainWindow.py  
+    Examples  
         
 
 ### Installation  
-To install eCRx: Run setup.py
-
+To install eCRx:   
+1. Download or clone the repository  
+2. Download mimic_prescriptions (https://drive.google.com/open?id=1jKu6Qdi6weqeUJb6-RcUjY1h_YH3mSe4) and add to Data folder  
+3. Run setup.py  
+  
 *Created for CSE 583 at the University of Washington*
