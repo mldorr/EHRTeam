@@ -25,42 +25,43 @@ eCRx is shared under the GNU General Public License V3 to encourage awarenesss o
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-    The eCRx team can be contacted: <insert contact information>
+    The eCRx team can be contacted: mldorr@uw.edu
  
 For more details, please see LICENSE.TXT
 
   
 ### Organization  
 Directory Structure:   
->    License.py  
->    README.py  
->    setup.py  
->    eCRx_logo.pnp  
->    Data  
->&nbsp;&nbsp;&nbsp;&nbspIsolateData.csv  
->&nbsp;&nbsp;&nbsp;&nbsp;mimic_drgcodes.csv  
->        mimic_admissions.csv  
->        mimic_procedures_icd.csv  
->        mimic_d_diagnoses_icd.csv  
->        narm's processed.csv  
->        mimic_d_procedures_icd.csv  
->        salmonellaRCTC.csv  
->        mimic_diagnoses_icd.csv  
->    Docs  
->        ComponentSpec.md  
->        Final Presentation.pptx	 
->        FunctionalSpec.md  
->    EHRTeam  
->        MainWindow.py    
->        QtUI_rev.py  
->        database_build.py  
->        output_pdf.py  
->        output_pdf_test.py
->        query.py  
->        sql_import.py  
->        test_query.py  
->        test_MainWindow.py  
->    Examples  
+
+    License.py  
+    README.py  
+    setup.py  
+    eCRx_logo.pnp  
+    Data  
+&nbsp;&nbsp;&nbsp;&nbsp;IsolateData.csv  
+&nbsp;&nbsp;&nbsp;&nbsp;mimic_drgcodes.csv  
+&nbsp;&nbsp;&nbsp;&nbsp;mimic_admissions.csv  
+&nbsp;&nbsp;&nbsp;&nbsp;        mimic_procedures_icd.csv  
+&nbsp;&nbsp;&nbsp;&nbsp;        mimic_d_diagnoses_icd.csv  
+        narm's processed.csv  
+        mimic_d_procedures_icd.csv  
+        salmonellaRCTC.csv  
+        mimic_diagnoses_icd.csv  
+    Docs  
+        ComponentSpec.md  
+        Final Presentation.pptx	 
+        FunctionalSpec.md  
+    EHRTeam  
+        MainWindow.py    
+        QtUI_rev.py  
+        database_build.py  
+        output_pdf.py  
+        output_pdf_test.py
+        query.py  
+        sql_import.py  
+        test_query.py  
+        test_MainWindow.py  
+    Examples  
         
 
 ### Installation  
