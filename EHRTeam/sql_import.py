@@ -1,18 +1,13 @@
 """
-This file imports necessary data from the local sql database
+This file imported the necessary data from the local sql database.
+It is not used in the package/module but is included for posterity.
 """
 
 # Import libraries
-#import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-#from IPython.display import display, HTML
 import psycopg2
 
-# below imports are used to print out pretty pandas dataframes
-
-
-#%matplotlib inline
 plt.style.use('ggplot')
 
 # information used to create a database connection
@@ -26,7 +21,6 @@ CON = psycopg2.connect(dbname=DBNAME, user=SQLUSER, password=PW)
 
 # the below statement is prepended to queries to ensure they select from the right schema
 QUERY_SCHEMA = 'set search_path to ' + SCHEMA_NAME + ';'
-
 
 
 #get data from table: prescriptions
@@ -68,7 +62,6 @@ INNER JOIN patients pat
 """
 ADMISSIONS = pd.read_sql_query(QUERY, CON)
 
-
 #get data from table: drgcodes
 QUERY = QUERY_SCHEMA +"""
 SELECT subject_id, hadm_id, drg_type, drg_code
@@ -77,14 +70,12 @@ FROM drgcodes
 """
 DRGCODES = pd.read_sql_query(QUERY, CON)
 
-
 #get icd-9 codes from table: procedures_icd
 QUERY = QUERY_SCHEMA +"""
 SELECT subject_id, hadm_id, icd9_code
 FROM procedures_icd
 """
 PROCEDURES_ICD = pd.read_sql_query(QUERY, CON)
-
 
 #get data from table: d_icd_procedures
 QUERY = QUERY_SCHEMA +"""
