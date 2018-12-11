@@ -70,6 +70,10 @@ Directory Structure:
 To install eCRx:   
 1. Download or clone the repository  
 2. Download mimic_prescriptions (https://drive.google.com/open?id=1jKu6Qdi6weqeUJb6-RcUjY1h_YH3mSe4) and add to Data folder  
-3. Run setup.py  
+3. Create new environment by running `environment.yml`  
+4. Navigate to EHRTeam subfolder  
+5. Enter `python MainWindow.py` in the command line  
+6. Enter patient information  
+7. Watch the magic happen    
   
 *Created for CSE 583 at the University of Washington*
