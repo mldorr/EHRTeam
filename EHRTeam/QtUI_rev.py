@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from collections import OrderedDict
 import pandas as pd
 import query as qu
 import database_build
@@ -669,7 +670,7 @@ class Ui_Output1Window(object):
                       'PTZ_Concl', 'SMX_Concl', 'STR_Concl', 'TEL_Concl', 'TET_Concl', 'TIO_Concl']
 
         variable = {}
-        table_narms = {}
+        table_narms = OrderedDict()
 
         for count in range(0, len(list_name)):
             cell = list_content[count]
