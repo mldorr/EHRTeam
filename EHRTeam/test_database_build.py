@@ -85,7 +85,7 @@ class TestFunctions(unittest.TestCase):
             self.test_result_2 = False
         assert (self.test_result_1 & self.test_result_2) == True
 
-    def test_merge_processor():
+    def test_merge_processor(self):
         """ Check if the merged dataframe consists of the subset of columns from
         other dataframe and check the length of the columns."""
 
@@ -95,11 +95,11 @@ class TestFunctions(unittest.TestCase):
             'age_group', 'admit_year', 'admit_new', 'disch_new', 'description', 'drug_type',
             'drug', 'formulary_drug_cd' in merge_all_salmonella.columns)
              and len(merge_all_salmonella.columns) == 25):
-            self.test_result_1 = True
+            self.test_result = True
         else:
-            self.test_result_1 = False
+            self.test_result = False
 
-        assert test_result == True
+        assert self.test_result == True
 
 if __name__ == '__main__':
     prescriptions = pd.read_csv("../Data/mimic_prescriptions.csv")

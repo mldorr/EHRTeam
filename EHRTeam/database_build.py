@@ -289,7 +289,7 @@ def merge_processor(diagnoses_icd, d_diagnoses_icd, procedures_icd, d_procedures
     """
     Merge imported datasets
     """
-    print('header', list(diagnoses_icd.columns.values))
+    #print('header', list(diagnoses_icd.columns.values))
 
     #Merge diagnoses with its definitions
     merge_diagnoses = pd.merge(diagnoses_icd.drop(columns=['Unnamed: 0']),
@@ -370,7 +370,7 @@ def main():
                                            d_procedures_icd, salmonella_icd, admissions2,
                                            drgcodes, prescriptions)
     print('database creation successful')
-    merge_all_salmonella.to_csv('../Data/out.csv')
+    #merge_all_salmonella.to_csv('../Data/out.csv')
 
 if __name__ == '__main__':
     main()
