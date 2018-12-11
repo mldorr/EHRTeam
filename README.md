@@ -32,37 +32,39 @@ For more details, please see LICENSE.TXT
   
 ### Organization  
 Directory Structure:   
-
-    License.py  
-    README.py  
-    setup.py  
-    eCRx_logo.pnp  
+ 
     Data  
         IsolateData.csv
         mimic_drgcodes.csv  
         mimic_admissions.csv  
         mimic_procedures_icd.csv  
         mimic_d_diagnoses_icd.csv  
-        narm's processed.csv  
+        narms_processed.csv  
         mimic_d_procedures_icd.csv  
         salmonellaRCTC.csv  
         mimic_diagnoses_icd.csv  
     Docs  
         ComponentSpec.md  
-        Final Presentation.pptx	 
         FunctionalSpec.md  
+        final_presentation.pdf  
+        tech_review.pdf   
     EHRTeam  
-        MainWindow.py    
+        .pylintrc  
+        MainWindow.py  
         QtUI_rev.py  
+        __init__.py  
         database_build.py  
-        output_pdf.py  
-        output_pdf_test.py
-        query.py  
-        sql_import.py  
-        test_query.py  
-        test_MainWindow.py  
-    Examples  
-        
+        eCRx_logo_small.png  
+        output
+    Example  
+        example.pdf    
+    .gitignore  
+    LICENSE.md  
+    README.md  
+    eCRx_logo.png  
+    environment.yml  
+    requirements.txt  
+    setup.py      
 
 ### Installation  
 To install eCRx:   
