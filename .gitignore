@@ -1,0 +1,9 @@
+# Data Files - too big to upload to github
+prescriptions.csv
+
+# Notesbooks from development
+*.ipynb_checkpoints
+*.ipynb
+
+# Pycache files
+*.pyc
