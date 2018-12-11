@@ -86,14 +86,15 @@ class TestFunctions(unittest.TestCase):
         assert (self.test_result_1 & self.test_result_2) == True
 
     def test_merge_processor():
-    	""" Check if the merged dataframe consists of the subset of columns from
+        """ Check if the merged dataframe consists of the subset of columns from
         other dataframe and check the length of the columns."""
-        if ('subject_id', 'hadm_id', 'Code', 'Descriptor', 'icd9_code', 'long_title',
+
+        if (('subject_id', 'hadm_id', 'Code', 'Descriptor', 'icd9_code', 'long_title',
             'admission_type', 'diagnosis', 'insurance', 'language', 'religion',
             'marital_status', 'ethnicity', 'gender', 'expire_flag', 'age', 'age_death',
             'age_group', 'admit_year', 'admit_new', 'disch_new', 'description', 'drug_type',
-            'drug', 'formulary_drug_cd' in merge_all_salmonella.columns) and
-            len(merge_all_salmonella.columns) == 25:
+            'drug', 'formulary_drug_cd' in merge_all_salmonella.columns)
+             and len(merge_all_salmonella.columns) == 25):
             self.test_result_1 = True
         else:
             self.test_result_1 = False
