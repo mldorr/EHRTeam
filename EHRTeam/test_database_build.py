@@ -85,19 +85,20 @@ class TestFunctions(unittest.TestCase):
             self.test_result_2 = False
         assert (self.test_result_1 & self.test_result_2) == True
 
-    # def test_merge_processor():
-    # 	""" Check if the merged dataframe consists of the subset of columns from other dataframe and check the length of the columns."""
-    # 	if ('Data_Year', 'Specimen_ID', 'Resistance_Pattern', 'AMI_Concl', 'AMP_Concl',
-    #     	'ATM_Concl', 'AUG_Concl', 'AXO_Concl', 'AZM_Concl', 'CAZ_Concl', 'CCV_Concl', 'CEP_Concl',
-    #     	'CEQ_Concl', 'CHL_Concl', 'CIP_Concl', 'CLI_Concl', 'COT_Concl', 'CTC_Concl', 'CTX_Concl',
-    #     	'ERY_Concl', 'FEP_Concl', 'FFN_Concl', 'FIS_Concl', 'FOX_Concl', 'GEN_Concl', 'IMI_Concl',
-    #     	'KAN_Concl', 'NAL_Concl', 'PTZ_Concl', 'SMX_Concl', 'STR_Concl', 'TEL_Concl', 'TET_Concl',
-    #     	'TIO_Concl' in merge_all_salmonella.columns) and len(merge_all_salmonella.columns) == 33:
-    #         self.test_result_1 = True
-    #     else:
-    #         self.test_result_1 = False
+    def test_merge_processor():
+    	""" Check if the merged dataframe consists of the subset of columns from
+        other dataframe and check the length of the columns."""
+        if ('subject_id', 'hadm_id', 'Code', 'Descriptor', 'icd9_code', 'long_title',
+            'admission_type', 'diagnosis', 'insurance', 'language', 'religion',
+            'marital_status', 'ethnicity', 'gender', 'expire_flag', 'age', 'age_death',
+            'age_group', 'admit_year', 'admit_new', 'disch_new', 'description', 'drug_type',
+            'drug', 'formulary_drug_cd' in merge_all_salmonella.columns) and
+            len(merge_all_salmonella.columns) == 25:
+            self.test_result_1 = True
+        else:
+            self.test_result_1 = False
 
-    #     assert test_result == True
+        assert test_result == True
 
 if __name__ == '__main__':
     prescriptions = pd.read_csv("../Data/mimic_prescriptions.csv")
