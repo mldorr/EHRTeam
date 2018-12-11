@@ -1,26 +1,29 @@
-# -*- coding: utf-8 -*-
+"""
+MainWindow.py
 
-# Form implementation generated from reading ui file 'MainWindow_rev.ui'
-#
-# Created by: PyQt5 UI code generator 5.11.3
-#
-# WARNING! All changes made in this file will be lost!
+Form implementation generated from reading ui file 'MainWindow_rev.ui'
+Originally created by: PyQt5 UI code generator 5.11.3, now edited by us
+"""
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from QtUI_rev import Ui_Output1Window
+from QtUI_rev import UiOutput1Window
 from output_pdf import get_report as pdf_get_report
 
-class Ui_MainWindow(object):
-    def openWindow(self):
+class UiMainWindow(object):
+    """builds the primary window and makes it work"""
+
+    def open_window(self):
+        """opens the window"""
         self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_Output1Window()
-        PATIENT_ID = int(self.lineEdit_patientid.text())
-        BIRTHYEAR = int(self.lineEdit_birthyear.text())
-        pdf_get_report(PATIENT_ID, BIRTHYEAR)
-        self.ui.setupUi(self.window, PATIENT_ID, BIRTHYEAR)
+        self.ui = UiOutput1Window()
+        patient_id = int(self.lineEdit_patientid.text())
+        birth_year = int(self.lineEdit_birthyear.text())
+        pdf_get_report(patient_id, birth_year)
+        self.ui.setup_ui(self.window, patient_id, birth_year)
         self.window.show()
 
-    def setupUi(self, MainWindow):
+    def setup_ui(self, MainWindow):
+        """builds ui"""
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(231, 208)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -70,12 +73,13 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.pushButton.clicked.connect(self.openWindow)
+        self.pushButton.clicked.connect(self.open_window)
 
-        self.retranslateUi(MainWindow)
+        self.retranslate_ui(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, MainWindow):
+    def retranslate_ui(self, MainWindow):
+        """fixes variable labels"""
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.groupBox_5.setTitle(_translate("MainWindow", "Health Record Input"))
@@ -88,8 +92,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    ui = UiMainWindow()
+    ui.setup_ui(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-

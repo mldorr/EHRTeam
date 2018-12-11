@@ -1,9 +1,9 @@
 '''
-python module for covnerting csv and output pdf
+python module for converting csv and output pdf
 '''
 
-from fpdf import FPDF, HTMLMixin
 import pandas as pd
+from fpdf import FPDF, HTMLMixin
 import query as qu
 
 class HTML2PDF(FPDF, HTMLMixin):
@@ -43,22 +43,22 @@ def html_maker(list_content, narms):
     for item in variable.keys():
         values_tem = variable[item]
         if (values_tem[0] == '[' and values_tem[1] == "'" and
-           values_tem[len(values_tem) - 2] == "'" and
-           values_tem[len(values_tem) - 1] == ']') :
-           variable[item] = values_tem[2:(len(variable[item]) - 2)]
+            values_tem[len(values_tem) - 2] == "'" and
+            values_tem[len(values_tem) - 1] == ']'):
+            variable[item] = values_tem[2:(len(variable[item]) - 2)]
         elif (values_tem[0] == '[' and
-           values_tem[len(values_tem) - 1] == ']') :
-           variable[item] = values_tem[1:(len(variable[item]) - 1)]
-    variable['drug'] = variable['drug'].replace("'"," ")
+              values_tem[len(values_tem) - 1] == ']'):
+            variable[item] = values_tem[1:(len(variable[item]) - 1)]
+    variable['drug'] = variable['drug'].replace("'", " ")
     variable['age'] = int(float(variable['age']))
     variable['age'] = str(variable['age'])
 
-    if (variable['age_death'] != 'nan'):
+    if variable['age_death'] != 'nan':
         variable['age_death'] = int(float(variable['age_death']))
         variable['age_death'] = str(variable['age_death'])
-    if variable['expire_flag'] == '1' :
+    if variable['expire_flag'] == '1':
         variable['expire_flag'] = 'Death'
-    else :
+    else:
         variable['expire_flag'] = 'Live'
     html = '''
     <hr>
@@ -133,9 +133,9 @@ def html_maker(list_content, narms):
 
     </p>
     </div>
-    <img src="eCRx_logo.png" alt="eCRx Logo" style="float:left;width:10px;height:8.3px;">
+    <img src="eCRx_logo_small.png" alt="eCRx Logo" style="float:left;width:10px;height:8.3px;">
     '''
-    f = open('tem_out.csv','w')
+    f = open('tem_out.csv', 'w')
     f.write(html)
     return html
 
@@ -160,13 +160,13 @@ def get_report(subject_id, birth_year):
                             'drug_type', 'drug', 'formulary_drug_cd'])
 
     table = qu.query_single(df1, 'subject_id', subject_id, ["subject_id"],
-                           list_tolist, ["subject_id"])
+                            list_tolist, ["subject_id"])
     ages = table['age'].tolist()
     patient_age = int(ages[0][0])
 
     year = birth_year + patient_age
 
-    if patient_age <= 4 :
+    if patient_age <= 4:
         age = '0-4'
     elif patient_age <= 9:
         age = '5-9'

@@ -10,7 +10,7 @@ class UnitTests(unittest.TestCase):
         '''
         test1 is to test if the html is the same as we expect
         '''
-        df1 = pd.read_csv('test_file.csv')
+        df1 = pd.read_csv('../Data/test_file.csv')
         list_tolist = reversed(['hadm_id', 'Code', 'Descriptor', 'icd9_code',
                                 'long_title', 'admission_type',	'diagnosis', 'insurance',
                                 'language', 'religion', 'marital_status', 'ethnicity',
@@ -23,7 +23,7 @@ class UnitTests(unittest.TestCase):
         for column in list_tolist:
             if column not in list(table.columns.values):
                 table[column] = 'Nah'
-        table_narms = qu.narms_query("narm's processed.csv",1996, '0-4')
+        table_narms = qu.narms_query("../Data/narms_processed.csv",1996, '0-4')
         data_row = table.iloc[0]
         list_tem = (data_row.tolist())
         html = op.html_maker(list_tem, table_narms)
@@ -31,7 +31,6 @@ class UnitTests(unittest.TestCase):
         f = open('tem_out.csv','w')
         f.write(html)
         html_template = '''
-
     <hr>
     <h1 align="center">Patient Case Report Form</h1>
     <hr>
@@ -104,7 +103,8 @@ class UnitTests(unittest.TestCase):
 
     </p>
     </div>
-    <img src="eCRx_logo.png" alt="eCRx Logo" style="float:left;width:10px;height:8.3px;">   
+    <img src="eCRx_logo_small.png" alt="eCRx Logo" style="float:left;width:10px;height:8.3px;">
+   
     '''
         self.assertEqual(len(html), len(html_template))
 
