@@ -1,11 +1,16 @@
-""" This python file is used to query useful data from datasets,
+"""
+This python file is used to query useful data from datasets,
 then store or generate a new csv file
+in the workflow, after user input something, code will go into this
+module and fetch data they need.
 """
 import pandas as pd
 
 def query(data, list_groupby, list_tolist, join_column):
     """
+    basic query function that query from large datasets
     group by a list of column and make a list of column to a list
+    and generate a list csv.
     """
     list_all = []
     for item in list_tolist:
@@ -26,8 +31,8 @@ def query(data, list_groupby, list_tolist, join_column):
 
 def query_single(data, column_name, column_value, list_groupby, list_tolist, join_column):
     """
-    group by a list of column and make a list of column to a list
-    and only get one specific row
+    after query, we get a groupby data set
+    and this function only get one specific row dataframe to return
     """
     df_all = query(data, list_groupby, list_tolist, join_column)
     #print(df_all)
@@ -36,6 +41,8 @@ def query_single(data, column_name, column_value, list_groupby, list_tolist, joi
 def filter_query(df_all, column_name, column_value, signal):
     """
     This function is used to filter the data that output from "query" function.
+    after query, you could use it to generate several line of data base on
+    your condition. Return a multiple row dataframe
     """
     if signal == '=':
         data = df_all.loc[df_all[column_name] == column_value]
@@ -51,6 +58,8 @@ def filter_query(df_all, column_name, column_value, signal):
 def narms_query(file_name, data_year, age_group, output_filename='narms_out.csv'):
     """
     Function narms_query is used to query data from "narms processed.csv"
+    we will generate the dataset by input year and age Condition
+    we will return a one row dataset for query.
     """
     df_all = pd.read_csv(file_name)
     df_all = df_all.loc[df_all['Data_Year'] == data_year]

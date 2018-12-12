@@ -1,5 +1,7 @@
 '''
 python module for converting csv and output pdf
+after query from database, we need to generate a pdf base on those
+information by this module
 '''
 
 import pandas as pd
@@ -7,11 +9,19 @@ from fpdf import FPDF, HTMLMixin
 import query as qu
 
 class HTML2PDF(FPDF, HTMLMixin):
-    '''create for pdf output need'''
+    '''
+    create for pdf output need
+    this fpdf python package ask us to generate this class
+    '''
     pass
 
 def html_maker(list_content, narms):
-    '''make the html file for pdf generator'''
+    '''
+    make the html file for pdf generator
+    base on the input list of mimic3 table and narms table
+    we will generate a html as the final input for fpdf
+    return a html string about the output pdf
+    '''
     list_name = ['subject_id', 'hadm_id', 'Code', 'Descriptor',	'icd9_code',
                  'long_title', 'admission_type', 'diagnosis', 'insurance', 'language', 'religion',
                  'marital_status', 'ethnicity', 'gender', 'expire_flag', 'age',	'age_death',
@@ -140,7 +150,12 @@ def html_maker(list_content, narms):
     return html
 
 def pdfgenerator(df1, df2):
-    '''generate pdf by html file'''
+    '''
+    generate pdf by html file
+    df1 and df2 is mimic3 table and narms table
+    it is the final step for our file and
+    generte a pdf in the end
+    '''
     data_row = df1.iloc[0]
     list_tem = (data_row.tolist())
     html = html_maker(list_tem, df2)
@@ -150,7 +165,13 @@ def pdfgenerator(df1, df2):
     pdf.output('html2pdf.pdf')
 
 def get_report(subject_id, birth_year):
-    '''main report generator program'''
+    '''
+    main report generator program
+    input is user's input patient subject id and birth data_year
+    with these two parameter we first query from query system and
+    analysis it and clean it to get the data we really need in
+    our report
+    '''
     df1 = pd.read_csv("../Data/test_file.csv")
     list_tolist = reversed(['hadm_id', 'Code', 'Descriptor', 'icd9_code',
                             'long_title', 'admission_type',	'diagnosis', 'insurance',
