@@ -42,7 +42,6 @@ def query_single(data, column_name, column_value, list_groupby, list_tolist, joi
     and this function only get one specific row dataframe to return
     """
     df_all = query(data, list_groupby, list_tolist, join_column)
-    #print(df_all)
     return df_all.loc[df_all[column_name] == column_value]
 
 def filter_query(df_all, column_name, column_value, signal):
