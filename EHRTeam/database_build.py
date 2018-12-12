@@ -8,7 +8,13 @@ import numpy as np
 import pandas as pd
 
 def salmonella_rctc_processor(salmonella_tc):
-    """selects only ICD-9 salmonella trigger codes"""
+    """
+    selects only ICD-9 salmonella trigger codes
+
+    Input: salmonella_tc: The trigger code of salmonella
+    Output: salmonella_icd: ICD-9 salmonella trigger codes
+
+    """
     salmonella_icd = salmonella_tc[salmonella_tc.CodeSystem == 'ICD9CM']
     return salmonella_icd
 
@@ -17,6 +23,10 @@ def admissions_processor(admissions):
     creates age_group variable and reprocesses dates from random
     future dates (how the EHR was anonymized) to match the MIMIC
     dataframe date range
+
+    Input: admissions: The imported "minic_admissions.csv"
+    Output: admissions: "minic_admissions.csv" with "age_group" processed
+            admissions2: "minic_admissions.csv" with "year" precessed
     """
     admissions['age_group'] = pd.Series(np.zeros(admissions.shape[0]))
     admissions.loc[(admissions['age'] > 0) &
@@ -151,6 +161,11 @@ def narms_processor(narms):
     cuts down narms data to appropriate US region and condition
     limits columns to only relevant
     reformats columns
+
+    Input: narms: "Isolatedata.csv"
+    Output: narms_year: Applied groupby to "Data_Year" and aggregate the other columns
+            narms_year_age: Applied groupby to both "Data_year" and "Age_group"
+            and aggregate the other columns
     """
     #Select region that corresponds to the MIMIC data
     narms_r1 = narms[narms.Region_Name == 'Region 1']
@@ -288,6 +303,11 @@ def merge_processor(diagnoses_icd, d_diagnoses_icd, procedures_icd, d_procedures
                     salmonella_icd, admissions2, drgcodes, prescriptions):
     """
     Merge imported datasets
+
+    Input: diagnoses_icd, d_diagnoses_icd, procedures_icd, d_procedures_icd,
+           salmonella_icd, admissions2, drgcodes, prescriptions. They are all
+           imported from dataset.
+    Output: A file merged all of the imputs.
     """
     #print('header', list(diagnoses_icd.columns.values))
 
@@ -345,7 +365,11 @@ def merge_processor(diagnoses_icd, d_diagnoses_icd, procedures_icd, d_procedures
     return merge_all_salmonella
 
 def main():
-    """merges everything"""
+    """
+    This function import all of the data, and then made a process for salmonella_tc, admissions
+    and narms. The merge everything.
+    Output: merges everything
+    """
     prescriptions = pd.read_csv("../Data/mimic_prescriptions.csv")
     diagnoses_icd = pd.read_csv("../Data/mimic_diagnoses_icd.csv")
     d_diagnoses_icd = pd.read_csv("../Data/mimic_d_diagnoses_icd.csv")
@@ -370,7 +394,7 @@ def main():
                                            d_procedures_icd, salmonella_icd, admissions2,
                                            drgcodes, prescriptions)
     print('database creation successful')
-    #merge_all_salmonella.to_csv('../Data/out.csv')
+    merge_all_salmonella.to_csv('../Data/out.csv')
 
 if __name__ == '__main__':
     main()
