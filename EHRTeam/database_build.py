@@ -106,8 +106,6 @@ def admissions_processor(admissions):
 
     #remove all new variables except converted date
     admissions2.drop(['admit_month', 'admit_day'], axis=1, inplace=True)
-    #keeping admit_year to match with narms
-
 
     #repeating above process for discharge date
     admissions2['disch_year'] = pd.Series(np.zeros(admissions2.shape[0]))
@@ -134,23 +132,30 @@ def admissions_processor(admissions):
                     (admissions2['dischtime'].dt.year > 2111), 'disch_year'] = 2002
     admissions2.loc[admissions2['dischtime'].dt.year <= 2111, 'disch_year'] = 2001
 
+    #convert to integer
     admissions2['disch_year'] = admissions2['disch_year'].astype('int')
 
+    #extract month and day
     admissions2['disch_month'] = admissions2['dischtime'].dt.month
     admissions2['disch_day'] = admissions2['dischtime'].dt.day
 
+    #converting leap year problems
     admissions2.loc[(admissions2['disch_day'] == 29) &
                     (admissions2['disch_month'] == 2), 'disch_year'] = 2004
 
+    #converting year, month, and day to string for merge
     admissions2['disch_year'] = admissions2['disch_year'].astype('str')
     admissions2['disch_month'] = admissions2['disch_month'].astype('str')
     admissions2['disch_day'] = admissions2['disch_day'].astype('str')
 
+    #merge into one date
     admissions2['disch_new'] = admissions2[['disch_year', 'disch_month',
                                             'disch_day']].apply(lambda x: '-'.join(x), axis=1)
 
+    #convert to datetime
     admissions2['disch_new'] = pd.to_datetime(admissions2['disch_new'])
 
+    #drop excess variables
     admissions2.drop(['disch_year', 'disch_month', 'disch_day'], axis=1, inplace=True)
 
     return (admissions, admissions2)
@@ -309,8 +314,6 @@ def merge_processor(diagnoses_icd, d_diagnoses_icd, procedures_icd, d_procedures
            imported from dataset.
     Output: A file merged all of the imputs.
     """
-    #print('header', list(diagnoses_icd.columns.values))
-
     #Merge diagnoses with its definitions
     merge_diagnoses = pd.merge(diagnoses_icd.drop(columns=['Unnamed: 0']),
                                d_diagnoses_icd.drop(columns=['Unnamed: 0']), how='inner',
@@ -338,7 +341,6 @@ def merge_processor(diagnoses_icd, d_diagnoses_icd, procedures_icd, d_procedures
     merge_diag_proc_salm = pd.merge(merge_diag_proc_salm, merge_diag_proc,
                                     how='left', left_on=['subject_id', 'hadm_id'],
                                     right_on=['subject_id', 'hadm_id'])
-    #should be 1297 unique
 
     #merge with admissions
     merge_salm_admit = pd.merge(merge_diag_proc_salm,
@@ -393,8 +395,6 @@ def main():
     merge_all_salmonella = merge_processor(diagnoses_icd, d_diagnoses_icd, procedures_icd,
                                            d_procedures_icd, salmonella_icd, admissions2,
                                            drgcodes, prescriptions)
-    print('database creation successful')
-    merge_all_salmonella.to_csv('../Data/out.csv')
 
 if __name__ == '__main__':
     main()
