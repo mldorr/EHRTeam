@@ -10,6 +10,7 @@ import query as qu
 
 class HTML2PDF(FPDF, HTMLMixin):
     '''
+    two input is fixed as fpdf package described in their package.
     create for pdf output need
     this fpdf python package ask us to generate this class
     '''
@@ -149,16 +150,16 @@ def html_maker(list_content, narms):
     f.write(html)
     return html
 
-def pdfgenerator(df1, df2):
+def pdfgenerator(mimic3, narms):
     '''
-    generate pdf by html file
     df1 and df2 is mimic3 table and narms table
+    generate pdf by html file
     it is the final step for our file and
     generte a pdf in the end
     '''
-    data_row = df1.iloc[0]
+    data_row = mimic3.iloc[0]
     list_tem = (data_row.tolist())
-    html = html_maker(list_tem, df2)
+    html = html_maker(list_tem, narms)
     pdf = HTML2PDF()
     pdf.add_page()
     pdf.write_html(html)
