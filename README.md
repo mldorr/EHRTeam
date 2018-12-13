@@ -2,7 +2,7 @@
   
 # EHR Team - eCRx
 ## *Electronic Case Reporting with Integrated Antibiotic Resistance Flagging*  
-**Team Members:** Maggie Dorr, Hao "Chris" Fang, Elaine Limqueco, Yiliang "Spike" Ma, B. Kevin Ramamada  
+**Team Members:** Maggie Dorr, Hao "Chris" Fang, Elaine Limqueco, Yiliang "Spike" Ma, B. Kevin Ramada  
   
 ### Brief Description  
 This project uses MIMIC III data to generate a mock electronic case report (eCR) system which integrates the CDC's National Antimicrobial Resistance Monitoring System (NARMS) data to flag patients on medications associated with recent antimicrobial resistance in their region and age group.  
@@ -10,7 +10,7 @@ This project uses MIMIC III data to generate a mock electronic case report (eCR)
 ### License  
 eCRx is shared under the GNU General Public License V3 to encourage awarenesss of recent antibiotic resistance patterns during patient treatment or prescription of medication, to promote the use and development of electronic health records/reports, and to assisst in public health research and policy development.
 
-    Copyright (C) <2018>  <Maggie Dorr, Hao "Chris" Fang, Elaine Limqueco, Yiliang "Spike" Ma, B. Kevin Ramamada  >
+    Copyright (C) <2018>  <Maggie Dorr, Hao "Chris" Fang, Elaine Limqueco, Yiliang "Spike" Ma, B. Kevin Ramada  >
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
