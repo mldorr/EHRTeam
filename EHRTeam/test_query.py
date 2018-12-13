@@ -5,9 +5,9 @@ import unittest
 import os
 import pandas as pd
 from query import query, query_single, filter_query as f, narms_query
-
-
-DF = pd.read_csv('test_file.csv')
+#%%
+DF = pd.read_csv('../Data/test_file.csv')
+#%%
 class TestFunctions(unittest.TestCase):
     """
     Unittest class
@@ -51,9 +51,9 @@ class TestFunctions(unittest.TestCase):
         named "narms_out.csv" after that. The input and output files should be in
         the same directory.
         """
-        filename = "narm's processed.csv"
+        #filename = "narm's processed.csv"
         output_filename = 'narms_out.csv'
-        extract_narm = narms_query(filename, 1996, '0-4')
+        extract_narm = narms_query("../Data/narms_processed.csv", 1996, '0-4')
         self.assertTrue(os.path.isfile(output_filename))
         load_file = pd.read_csv(output_filename)
         self.assertEqual(load_file.shape, (1, 35))

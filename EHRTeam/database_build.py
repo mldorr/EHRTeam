@@ -395,6 +395,7 @@ def main():
     merge_all_salmonella = merge_processor(diagnoses_icd, d_diagnoses_icd, procedures_icd,
                                            d_procedures_icd, salmonella_icd, admissions2,
                                            drgcodes, prescriptions)
+    return merge_all_salmonella
 
 if __name__ == '__main__':
     main()
