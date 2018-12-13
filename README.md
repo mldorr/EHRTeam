@@ -50,14 +50,22 @@ Directory Structure:
         tech_review.pdf   
     EHRTeam  
         .pylintrc  
-        MainWindow.py  
-        QtUI_rev.py  
         __init__.py  
         database_build.py  
         eCRx_logo_small.png  
-        output
+        main_window.py  
+        output_pdf.py  
+        query.py  
+        report_ui.py  
+        sql_import.py  
+        test_database_build.py  
+        test_main_window.py  
+        test_output_pdf.py  
+        test_query.py  
+        test_report_UI.py  
     Example  
-        example.pdf    
+        example.pdf
+        patients.txt      
     .gitignore  
     LICENSE.md  
     README.md  
@@ -72,7 +80,7 @@ To install eCRx:
 2. Download mimic_prescriptions (https://drive.google.com/open?id=1jKu6Qdi6weqeUJb6-RcUjY1h_YH3mSe4) and add to Data folder  
 3. Create new environment by running `environment.yml`  
 4. Navigate to EHRTeam subfolder  
-5. Enter `python MainWindow.py` in the command line  
+5. Enter `python main_window.py` in the command line  
 6. Enter patient information  
 7. Watch the magic happen    
   
